@@ -1,0 +1,196 @@
+/*
+  global
+*/
+body {
+  font-size: 14px;
+}
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: helvetica, arial, sans-serif;
+}
+
+.container {
+  max-width: 900px;
+}
+.container-alternate {
+  background: #f0f0f0;
+}
+.navbar {
+  background: #fff;
+  padding: 0.3em 0;
+}
+.navbar .navbar-brand {
+  color: #000;
+  font-family: georgia, serif;
+  font-weight: bold;
+}
+.navbar ul.nav li a {
+  color: #111;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0 1.5em;
+}
+.navbar ul.nav li a:hover {
+  color: #000;
+}
+.navbar ul.nav li button {
+  margin: 0.7em 0 0 1em;
+}
+
+/*
+  index
+*/
+.bg {
+  background: url(../img/shanghai.jpg) no-repeat center center;
+  position: fixed;
+  width: 100%;
+  height: 350px; /*same height as jumbotron */
+  top:0;
+  left:0;
+  z-index: -1;
+}
+.jumbotron {
+  margin-bottom: 0px;
+  height: 350px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 4.5em 0 3.5em;
+  background:transparent;
+}
+.jumbotron h1 {
+  font-family: georgia, serif;
+}
+.jumbotron h2 {
+  font-style: italic;
+  font-weight: normal;
+  line-height: 1.4em;
+  margin-bottom: 1.4em;
+}
+.jumbotron .btn {
+  color: black;
+  text-align: center;
+  font-size: 0.9em;
+  padding: 0.3em 2.5em 0.5em;
+}
+.jumbotron .btn .glyphicon {
+  margin-left: 0.2em;
+  position: relative;
+  top: 3px;
+}
+
+.subhead {
+  font-size: 2em;
+  text-align: center;
+  margin: 2em 0 0.5em;
+}
+.introductions {
+  margin-bottom: 3em;
+}
+.introduction {
+  margin: 1em 0;
+  text-align: center;
+}
+.introduction .introduction-ball {
+  background: #f0f0f0;
+  border-radius: 50%;
+  color: #333;
+  display: inline-block;
+  line-height: 1em;
+  padding: 3em;
+}
+.introduction .introduction-ball .glyphicon {
+  font-size: 3em;
+  position: relative;
+  top: -3px;
+  right: 1px;
+}
+.introduction h3 {
+  font-size: 1.5em;
+}
+
+.reference p {
+  line-height: 1.5em;
+  margin: 1em 0;
+}
+.reference p:last-child {
+  margin-bottom: 4em;
+}
+
+.middlepart {
+  margin: 6.5em 0 2.5em 0;
+}
+
+.jsme {
+  margin: 0.5em 0 1.5em 0;
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+input.ng-invalid.ng-dirty {
+  border-color: #b94a48;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+}
+
+.help-block {
+  color: #b94a48;
+}
+
+input.ng-valid.ng-dirty {
+  border-color: #468847;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+}
+
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  float: right;
+  position: relative;
+  top: -24px;
+  right: 10px;
+  -webkit-animation: rotating 1s linear infinite;
+}
+
+
+footer {
+  background: #111;
+  color: #fff;
+  padding: 1.5em 0 0.8em;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar ul.nav li {
+    text-align: center;
+  }
+  .navbar ul.nav li button {
+    margin: 1em 0;
+  }
+  .jumbotron {
+    font-size: 14px;
+    padding: 6em 0 4em;
+  }
+  .introduction {
+    margin-bottom: 2em;
+  }
+}
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+  .jumbotron {
+    font-size: 12px;
+  }
+  footer .pull-right {
+    display: none;
+  }
+}

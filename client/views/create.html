@@ -1,0 +1,24 @@
+<div class="container" style="max-width:420px">
+  <div class="middlepart">
+    <form name="form "class="form-horizontal" role="form" novalidate="novalidate" method="post">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">SMILES</label>
+        <div class="col-sm-9">
+          <input class="form-control input-sm" ng-model="smiles" id="smiles" name="smiles" autofocus="autofocus" required="required" /><span ng-show="form.smiles.$dirty &amp;&amp; form.smiles.$error.required" class="help-block">SMILES cannot be empty</span>
+        </div>
+      </div>
+      <div class="jsme" name="jme" code="JME.class" width="420" height="330">
+        You have to enable JavaScript in your browser to use JSME!
+      </div>
+      <div class="form-group">
+        <label class="col-sm-6 control-label">Enter the code:</label>
+        <div class="col-sm-3">
+          <input class="form-control input-sm" id="code" name="code" ng-model="code" captcha-check="captcha-check" required="required" ng-maxlength="4" ng-minlength="4" /><i ng-show="busy" class="glyphicon glyphicon-refresh rotating"></i>
+        </div>
+        <img class="col-sm-3 clickable" ng-src="{{image}}" ng-click="updateCaptcha()" title="change one" />
+      </div>
+      <span ng-show="form.code.$dirty &amp;&amp; form.code.$error.required" class="help-block">Please enter validation code</span><span ng-show="form.code.$dirty &amp;&amp; form.code.$error.notMatch" class="help-block">Incorrect validation code</span>
+      <button ng-click="submitJob()" class="btn btn-primary" ng-disabled="form.$invalid">Create Job</button>
+    </form>
+  </div>
+</div>
