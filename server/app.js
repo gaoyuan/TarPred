@@ -19,22 +19,36 @@ var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 5555);
-app.set('views', __dirname + '../client');
+app.set('views', path.join(__dirname, '..', 'client'));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(methodOverride());
-app.use(express.static(path.join(__dirname, '/../client')));
+app.use(express.static(path.join(__dirname, '..', 'client')));
 
 // development only
 if ('development' == app.get('env')) {
   app.use(errorhandler());
 }
 
+// global utility functions
+function processArray(items, process) {
+  var todo = items.concat();
+
+  setTimeout(function() {
+    process(todo.shift());
+    if(todo.length > 0) {
+      setTimeout(arguments.callee, 25);
+    }
+  }, 25);
+}
+
+
+// handeling requests
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/../client/index.html');
+  res.sendFile(path.join(__dirname, '..', '/client/index.html'));
 });
 app.get('/signup', function(req, res){
   res.redirect('/#signup');
@@ -49,7 +63,7 @@ app.get('/view', function(req, res){
   res.redirect('/#view');
 });
 app.get('/download/:id', function(req, res){
-  var file = __dirname + '/' + req.params.id + '.csv';
+  var file = path.join(__dirname, 'results', req.params.id + '.csv');
   res.download(file);
 });
 
@@ -218,36 +232,61 @@ app.post('/create', function(req, res){
                         error: 'Database error! Please try again later.'
                       });                
                     }else{
-                      infile = job._id + '.smi';
-                      outfile = job._id + '.csv';
+                      var infile = job._id + '.smi';
+                      var outfile = job._id + '.csv';
+                      var tmpdir = path.join(__dirname, job._id);
                       fs.writeFile(infile, smiles, function(err){
                         if (err) {
                           console.log(err);
                         }else{
-                          var predict = exec('python predict.py -output ' + outfile + ' -smiles ' + infile);
-                          predict.on('close', function(code){
-                            if (code == 0){
-                              // exit successfully
-                              exit_status = 1;
-                            }else{
-                              // exit with error
-                              exit_status = 2;
-                            }
-                            jobfunc.update_job_status(job._id, exit_status, function(status){
-                              if (status == 'error'){
-                                res.status(500).json({
-                                  error: 'Database error! Please try again later.'
-                                });
+                          // make a temporary directory
+                          fs.mkdir(tmpdir, function(err){
+                            // now perform the calculation
+                            fs.readdir(path.join(__dirname, '/Refbase/ecfp'),function(err,files){
+                              if (err) {
+                                console.log(err);
                               }else{
-                                res.status(200).end();
+                                processArray(files, function(file){
+                                  var fname = path.join(__dirname, '/Refbase/ecfp/' + file);
+                                  var output = path.join(tmpdir, file.split('.')[0] + '.tani');
+                                  exec('screenmd '+infile+' -k '+fname+' -g -M Tanimoto -o '+ output).on('close', function(code){
+                                    if (code == 0){
+                                      // exit successfully
+                                      jobfunc.increment_job_progress(job._id, function(status, progress){
+                                        if (status == 'success'){
+                                          if (progress == 533){
+                                            // summarize result
+                                            exec('summary.py -query ' + infile).on('close', function(code){
+                                              if (code == 0){
+                                                // exit successfully
+                                                exit_status = 2;
+                                              }else{
+                                                // exit with error
+                                                exit_status = 1;
+                                              }
+                                              jobfunc.update_job_status(job._id, exit_status, function(status){
+                                                if (status == 'error'){
+                                                  res.status(500).json({
+                                                    error: 'Database error! Please try again later.'
+                                                  });
+                                                }else{
+                                                  res.status(200).end();
+                                                }
+                                              });
+                                            });
+                                          }
+                                        }
+                                      });
+                                    }                                  
+                                  });
+                                });
                               }
-                            });
-                          });
-                          res.status(200).end();
+                            }); // end fs.readdir
+                          }); // end fs.mkdir
                         }
-                      });
+                      }); // end fs.writeFile
                     }
-                  });
+                  }); // end jobfunc.create_job
                 }else{
                   res.status(401).json({
                     error: 'Incorrect password.'
@@ -260,6 +299,7 @@ app.post('/create', function(req, res){
           }
         });   
       }else{
+        // incorrect validation code
         var code = parseInt(Math.random()*9000+1000);
         captchafunc.create_captcha(code, function(status, id){
           if (status == 'error'){
@@ -277,9 +317,10 @@ app.post('/create', function(req, res){
             });
           }
         });    
-      }     
+      }  
     }
-  });
+  }); // end captchafunc.get_code_and_remove
+  res.status(200).end();
   return;
 });
 app.post('/list', function(req, res){

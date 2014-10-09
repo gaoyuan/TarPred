@@ -17,7 +17,8 @@ var userSchema = new mongoose.Schema({
 var jobSchema = new mongoose.Schema({
     username: String,
     smiles: String,
-    status: {type: Number, default: 0},
+    status: {type: Number, default: 0}, // 0: new, 1: error, 2: done
+    progress: {type: Number, default: 0},
     date: {type: Date, default: Date.now}
 });
 
