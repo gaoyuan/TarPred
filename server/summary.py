@@ -80,7 +80,7 @@ def main():
     Target_smi = pickle.load(fin)
     fin.close()
 
-    fusionScore = result_formatting(query,topn)
+    fusionScore = result_formatting(query,30)
     NearestStructure(query,fusionScore,d,Target_smi)
 
     removefiles(query)

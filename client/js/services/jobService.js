@@ -19,9 +19,15 @@ angular.module('TarPredApp')
         });
     };
 
+    jobServiceAPI.progress = function(id){
+        return $http.post('/progress', {
+            id: id
+        });
+    };
+
     jobServiceAPI.download = function(id){
         return $http.get('/download/' + id);
-    }; 
+    };
 
     return jobServiceAPI;
 });

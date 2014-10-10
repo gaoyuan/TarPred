@@ -5,13 +5,23 @@
         </div>
         <div ng-show="jobs.length > 0">
             <table class="table table-striped table-bordered">
-                <tr><th>SMILES</th><th>Job Start Time</th><th>Status</th></tr>
+                <tr>
+                    <th class="col-sm-6">SMILES</th>
+                    <th class="col-sm-4">Job Start Time</th>
+                    <th class="col-sm-2">Status</th>
+                </tr>
                 <tr ng-repeat="job in jobs">
                     <td>{{job.smiles}}</td>
                     <td>{{job.date | date: 'medium'}}</td>
                     <td ng-if="job.status == 2">Error</td>
                     <td ng-if="job.status == 1"><a href="/download/{{job._id}}" target="_self">Download</a></td>
-                    <td ng-if="job.status == 0">In Progress</td>
+                    <td ng-if="job.status == 0">
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{job.progress}}" aria-valuemin="0" aria-valuemax="533" ng-style="{width : ( job.progress/533.0*100 + '%' ) }">
+                            {{job.progress/533.0*100}}%
+                          </div>
+                        </div>
+                    </td>
                 </tr>
             </table>
         </div>

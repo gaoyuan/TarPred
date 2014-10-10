@@ -232,9 +232,9 @@ app.post('/create', function(req, res){
                         error: 'Database error! Please try again later.'
                       });                
                     }else{
-                      var infile = job._id + '.smi';
-                      var outfile = job._id + '.csv';
-                      var tmpdir = path.join(__dirname, job._id);
+                      var infile = job._id.toString() + '.smi';
+                      var outfile = job._id.toString() + '.csv';
+                      var tmpdir = path.join(__dirname, job._id.toString());
                       fs.writeFile(infile, smiles, function(err){
                         if (err) {
                           console.log(err);
@@ -242,44 +242,46 @@ app.post('/create', function(req, res){
                           // make a temporary directory
                           fs.mkdir(tmpdir, function(err){
                             // now perform the calculation
-                            fs.readdir(path.join(__dirname, '/Refbase/ecfp'),function(err,files){
+                            fs.readdir(path.join(__dirname, '/Refbase/ecfp'), function(err, files){
                               if (err) {
                                 console.log(err);
                               }else{
-                                processArray(files, function(file){
+                                var fusionSim = function(ecfp_files){
+                                  var file = ecfp_files.shift();
                                   var fname = path.join(__dirname, '/Refbase/ecfp/' + file);
                                   var output = path.join(tmpdir, file.split('.')[0] + '.tani');
-                                  exec('screenmd '+infile+' -k '+fname+' -g -M Tanimoto -o '+ output).on('close', function(code){
-                                    if (code == 0){
-                                      // exit successfully
+                                  exec('screenmd '+infile+' -k '+fname+' -g -M Tanimoto -o '+ output, function(error){
+                                    if (error == null){
+                                      // exitted successfully
                                       jobfunc.increment_job_progress(job._id, function(status, progress){
-                                        if (status == 'success'){
-                                          if (progress == 533){
-                                            // summarize result
-                                            exec('summary.py -query ' + infile).on('close', function(code){
-                                              if (code == 0){
-                                                // exit successfully
-                                                exit_status = 2;
+                                        if (progress == 533){
+                                          // summarize result
+                                          exec('summary.py -query ' + infile).on('close', function(code){
+                                            if (code == 0){
+                                              // exit successfully
+                                              exit_status = 2;
+                                            }else{
+                                              // exit with error
+                                              exit_status = 1;
+                                            }
+                                            jobfunc.update_job_status(job._id, exit_status, function(status){
+                                              if (status == 'error'){
+                                                res.status(500).json({
+                                                  error: 'Database error! Please try again later.'
+                                                });
                                               }else{
-                                                // exit with error
-                                                exit_status = 1;
+                                                res.status(200).end();
                                               }
-                                              jobfunc.update_job_status(job._id, exit_status, function(status){
-                                                if (status == 'error'){
-                                                  res.status(500).json({
-                                                    error: 'Database error! Please try again later.'
-                                                  });
-                                                }else{
-                                                  res.status(200).end();
-                                                }
-                                              });
                                             });
-                                          }
+                                          });
+                                        } else {
+                                          fusionSim(ecfp_files);
                                         }
                                       });
-                                    }                                  
+                                    }
                                   });
-                                });
+                                };
+                                fusionSim(files);
                               }
                             }); // end fs.readdir
                           }); // end fs.mkdir
@@ -361,6 +363,21 @@ app.post('/list', function(req, res){
         break;
       default:
         break;
+    }
+  });
+  return;
+});
+app.post('/progress', function(req, res){
+  var id = req.body.id;
+  jobfunc.get_job_progress(id, function(status, progress){
+    if (status == 'error'){
+      res.status(500).json({
+        error: 'Database error! Please try again later.'
+      });
+    }else{
+      res.status(200).json({
+        progress: progress
+      });
     }
   });
   return;

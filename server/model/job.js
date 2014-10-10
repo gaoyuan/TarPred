@@ -30,23 +30,29 @@ exports.update_job_status = function update_job_status(id, status, callback){
   });
 };
 
-exports.increment_job_progress = function increment_job_progress(id, callback){
+// get progress
+exports.get_job_progress = function get_job_progress(id, callback){
   var Job = mongoose.model('Job');
-  Job.findbyId(id, function(err, result){
+  Job.findById(id, function(err, result){
     if (err) {
       callback('error');
     } else {
-      result.progress += 1;
-      result.save(function(err){
-        if (err) {
-          callback('error');
-        } else {
-          callback('success', result.progress);
-        }
-      });
+      callback('success', result.progress);
     }
   });
-}
+};
+
+// increment progress
+exports.increment_job_progress = function increment_job_progress(id, callback){
+  var Job = mongoose.model('Job');
+  Job.findByIdAndUpdate(id, {$inc: {progress: 1}}, {select: {progress:1}}, function(err, result){
+    if (err) {
+      callback('error');
+    } else {
+      callback('success', result.progress);
+    }
+  });
+};
 
 // list all jobs of a user
 exports.list_user_jobs = function list_user_jobs(username, callback){

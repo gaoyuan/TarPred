@@ -30,4 +30,4 @@ mongoose.model('User', userSchema);
 mongoose.model('Job', jobSchema);
 mongoose.model('Captcha', captchaSchema)
 
-mongoose.connect('mongodb://root:Yuan2xian@localhost:27017/TarPred');
+mongoose.connect('mongodb://root:miss_babyface@localhost:27017/TarPred');
