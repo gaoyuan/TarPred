@@ -1,4 +1,5 @@
 mongodb/
 node_modules/
 *.log
+*.smi
 .DS_Store

@@ -1,9 +1,11 @@
 angular.module('TarPredApp')
-.controller('indexController', function($scope, $rootScope, $location){
+.controller('indexController', function($scope, $rootScope, $cookies, $location){
+	$rootScope.user = $cookies.user;
     $scope.logout = function(){
         noty({text: 'Signout successful!', type:'success', timeout: 1000});
+        delete $cookies.user;
+        delete $cookies.pass;
         $rootScope.user = null;
-        $rootScope.pass = null;
         $location.path('/');
         return false;
     };

@@ -1,5 +1,5 @@
 angular.module('TarPredApp')
-.controller('signupController', function($scope, $rootScope, $location, userService){
+.controller('signupController', function($scope, $rootScope, $cookies, $location, userService){
     $scope.countries = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola",
         "Anguilla", "Antarctica", "Antigua And Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria",
         "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin",
@@ -49,8 +49,9 @@ angular.module('TarPredApp')
             $scope.verification
         ).success(function(res){
             noty({text: 'Signup successful!', type:'success', timeout: 1000});
+            $cookies.user = $scope.username;
+            $cookies.pass = $scope.password;
             $rootScope.user = $scope.username;
-            $rootScope.pass = $scope.password;
             $location.path('/');
         }).error(function(res){
             noty({text: res.error, type:'error', timeout: 1000});

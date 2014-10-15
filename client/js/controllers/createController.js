@@ -1,23 +1,33 @@
 angular.module('TarPredApp')
-.controller('createController', function($scope, $rootScope, $location, jobService, captchaService){
-    if (!$rootScope.user){
+.controller('createController', function($scope, $cookies, $timeout, $location, jobService, captchaService){
+    if (!$cookies.user){
         noty({text: 'Please sign in!', timeout: 1000});
         $location.path('/signin');
     }else{
-        if (typeof(JSApplet) != undefined){
-            JSApplet.JSME.replaceAllAppletsByJSME(function(jmeInstance){
-                jmeInstance.setAfterStructureModifiedCallback(function(jsme) {
-                    $scope.$apply(function(){
-                        $scope.smiles = jsme.src.smiles();
+        var addSmilesListener = function(){
+            try{
+                JSApplet.JSME.replaceAllAppletsByJSME(function(jmeInstance){
+                    jmeInstance.setAfterStructureModifiedCallback(function(jsme) {
+                        $scope.$apply(function(){
+                            $scope.smiles = jsme.src.smiles();
+                        });
                     });
                 });
-            });
+                document.jme.setAfterStructureModifiedCallback(function(jsme){
+                    $scope.$apply(function(){
+                        $scope.smiles = jsme.src.smiles();
+                    });                    
+                })
+            }catch(e){
+                $timeout(addSmilesListener, 500);
+            }
         }
+        addSmilesListener();
         
         $scope.submitJob = function(){
             jobService.create(
-                $rootScope.user,
-                $rootScope.pass,
+                $cookies.user,
+                $cookies.pass,
                 $scope.smiles,
                 $scope.captcha_id,
                 $scope.code
