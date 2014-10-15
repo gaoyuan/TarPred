@@ -33,19 +33,6 @@ if ('development' == app.get('env')) {
   app.use(errorhandler());
 }
 
-// global utility functions
-function processArray(items, process) {
-  var todo = items.concat();
-
-  setTimeout(function() {
-    process(todo.shift());
-    if(todo.length > 0) {
-      setTimeout(arguments.callee, 25);
-    }
-  }, 25);
-}
-
-
 // handeling requests
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '..', '/client/index.html'));

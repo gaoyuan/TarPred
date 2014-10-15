@@ -14,12 +14,19 @@ var userSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now}
 });
 
+var resultSchema = new mongoose.Schema({
+    bindingDB: [mongoose.Types.String],
+    drugbank: [mongoose.Types.String],
+    neighbors: [mongoose.Types.String]
+});
+
 var jobSchema = new mongoose.Schema({
     username: String,
     smiles: String,
     status: {type: Number, default: 0}, // 0: new, 1: error, 2: done
     progress: {type: Number, default: 0},
-    date: {type: Date, default: Date.now}
+    date: {type: Date, default: Date.now},
+    results: [resultSchema]
 });
 
 var captchaSchema = new mongoose.Schema({
@@ -27,6 +34,7 @@ var captchaSchema = new mongoose.Schema({
 });
 
 mongoose.model('User', userSchema);
+mongoose.model('Result', resultSchema);
 mongoose.model('Job', jobSchema);
 mongoose.model('Captcha', captchaSchema)
 
