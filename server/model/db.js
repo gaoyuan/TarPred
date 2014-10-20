@@ -14,12 +14,17 @@ var userSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now}
 });
 
+var structureSchema = new mongoose.Schema({
+    id: String,
+    svg: String
+});
+
 var resultSchema = new mongoose.Schema({
     bindingDB: [mongoose.Types.String],
     drugbank: [mongoose.Types.String],
     GeneID: String,
     diseases: [mongoose.Types.String],
-    neighbors: [mongoose.Types.Number]
+    neighbors: [mongoose.Types.String]
 });
 
 var jobSchema = new mongoose.Schema({
@@ -37,7 +42,8 @@ var captchaSchema = new mongoose.Schema({
 
 mongoose.model('User', userSchema);
 mongoose.model('Result', resultSchema);
+mongoose.model('Structure', structureSchema);
 mongoose.model('Job', jobSchema);
-mongoose.model('Captcha', captchaSchema)
+mongoose.model('Captcha', captchaSchema);
 
 mongoose.connect('mongodb://root:miss_babyface@localhost:27017/TarPred');
