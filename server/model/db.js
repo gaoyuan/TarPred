@@ -17,7 +17,9 @@ var userSchema = new mongoose.Schema({
 var resultSchema = new mongoose.Schema({
     bindingDB: [mongoose.Types.String],
     drugbank: [mongoose.Types.String],
-    neighbors: [mongoose.Types.String]
+    GeneID: String,
+    diseases: [mongoose.Types.String],
+    neighbors: [mongoose.Types.Number]
 });
 
 var jobSchema = new mongoose.Schema({
