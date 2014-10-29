@@ -220,7 +220,6 @@ app.post('/create', function(req, res){
                       });                
                     }else{
                       var infile = job._id.toString() + '.smi';
-                      var outfile = job._id.toString() + '.csv';
                       var tmpdir = path.join(__dirname, job._id.toString());
                       fs.writeFile(infile, smiles, function(err){
                         if (err) {
@@ -235,6 +234,9 @@ app.post('/create', function(req, res){
                               }else{
                                 var fusionSim = function(ecfp_files){
                                   var file = ecfp_files.shift();
+                                  if (file === undefined){
+                                    return;
+                                  }
                                   var fname = path.join(__dirname, '/Refbase/ecfp/' + file);
                                   var output = path.join(tmpdir, file.split('.')[0] + '.tani');
                                   exec('screenmd '+infile+' -k '+fname+' -g -M Tanimoto -o '+ output, function(error){

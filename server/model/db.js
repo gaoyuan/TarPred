@@ -15,7 +15,7 @@ var userSchema = new mongoose.Schema({
 });
 
 var structureSchema = new mongoose.Schema({
-    id: String,
+    _id: String,
     svg: String
 });
 
@@ -23,8 +23,12 @@ var resultSchema = new mongoose.Schema({
     bindingDB: [mongoose.Types.String],
     drugbank: [mongoose.Types.String],
     GeneID: String,
+    score: Number,
     diseases: [mongoose.Types.String],
-    neighbors: [mongoose.Types.String]
+    neighbors: [{
+        _id: String,
+        SMILES: String
+    }]
 });
 
 var jobSchema = new mongoose.Schema({

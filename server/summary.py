@@ -12,6 +12,7 @@ import textwrap
 import shutil
 import pickle
 import numpy as np
+import pymongo
 
 def result_formatting(query,topN):
 
@@ -40,7 +41,31 @@ def result_formatting(query,topN):
 
 
 def NearestStructure(query,fusionScore,d,Target_smi):
-    
+    # store the result in mongodb
+    client = pymongo.MongoClient('mongodb://root:miss_babyface@localhost:27017/TarPred')
+    db = client.TarPred
+    results = []
+
+    for info in fusionScore:
+        target, ligand = info
+        ligand_id_list = list(ligand[0])
+        smiles = Target_smi[target]
+        smiles = [smiles[int(ligandid)-1] for ligandid in ligand_id_list]
+
+        bindingDB, drugbank = d[target]
+        score = ligand[1]
+        neighbors = [{'_id': s.split()[1], 'SMILES': s.split()[0]} for s in smiles]
+
+        results.append({
+            'bindingDB': bindingDB,
+            'drugbank': drugbank,
+            'score': score,
+            'neighbors': neighbors
+        })
+
+    db.jobs.update({'_id': query.split('.')[0]}, {'results': results})
+
+    """
     resultpath = os.getcwd() +'\\results'
     filename = query.split('.')[0]
     fout = open(resultpath+'\\'+'%s.csv'%filename,'w')
@@ -57,6 +82,7 @@ def NearestStructure(query,fusionScore,d,Target_smi):
         fout.write(target+'\t'+targetname+'\t'+str(ligand[1])+'\t'+'['+';'.join(smiles)+']'+'\n')
 
     fout.close()
+    """
 
 def removefiles(query):
     filename = query.split('.')[0]
