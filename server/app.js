@@ -51,7 +51,7 @@ app.get('/view', function(req, res){
   res.redirect('/#view');
 });
 app.get('/view/:id', function(req, res){
-  res.redirect('/#view/:id');
+  res.redirect('/#view/' + req.params.id);
 });
 app.get('/download/:id', function(req, res){
   var file = path.join(__dirname, 'results', req.params.id + '.csv');
@@ -458,8 +458,6 @@ app.post('/captcha/check', function(req, res){
     }
   });
 });
-
-
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
