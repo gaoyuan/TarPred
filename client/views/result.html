@@ -1,0 +1,18 @@
+<div class="container" style="max-width:800px">
+    <div class="middlepart">
+        This page is still under construction. Will be updated soon. Stay tuned :)
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th class="col-sm-6">Target Name</th>
+                <th class="col-sm-2">3NN score</th>
+                <th class="col-sm-2">Similar Structures</th>
+            </tr>
+            <tr ng-repeat="result in results">
+                <td>{{result.bindingDB}}</td>
+                <td>{{result.score}}</td>
+                <td>{{result.neighbors}}</td>
+            </tr>
+        </table>
+    </div>
+    {{smiles}}
+</div>

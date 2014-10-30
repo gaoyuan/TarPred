@@ -19,6 +19,9 @@ app.config(function($routeProvider, $locationProvider) {
     }).when('/view', {
         templateUrl: 'views/view.html',
         controller: 'viewController'
+    }).when('/view/:id', {
+        templateUrl: 'views/result.html',
+        controller: 'resultController'
     }).otherwise({
         redirectTo: '/'
     });

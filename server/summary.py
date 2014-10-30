@@ -13,6 +13,7 @@ import shutil
 import pickle
 import numpy as np
 import pymongo
+from bson.objectid import ObjectId
 
 def result_formatting(query,topN):
 
@@ -54,7 +55,7 @@ def NearestStructure(query,fusionScore,d,Target_smi):
 
         bindingDB, drugbank = d[target]
         score = ligand[1]
-        neighbors = [{'_id': s.split()[1], 'SMILES': s.split()[0]} for s in smiles]
+        neighbors = [{'_id': s.split()[1], 'smiles': s.split()[0]} for s in smiles]
 
         results.append({
             'bindingDB': bindingDB,
@@ -63,26 +64,7 @@ def NearestStructure(query,fusionScore,d,Target_smi):
             'neighbors': neighbors
         })
 
-    db.jobs.update({'_id': query.split('.')[0]}, {'results': results})
-
-    """
-    resultpath = os.getcwd() +'\\results'
-    filename = query.split('.')[0]
-    fout = open(resultpath+'\\'+'%s.csv'%filename,'w')
-    fout.write('Target_id    Target_name    3NN_score    Similar_smiles\n')
-    
-    n = 0
-    for info in fusionScore:
-        n += 1
-        target,ligand = info
-        targetname = ';'.join(d[target])
-        ligand_id_list = list(ligand[0])
-        smiles = Target_smi[target]
-        smiles = [smiles[int(ligandid)-1] for ligandid in ligand_id_list]
-        fout.write(target+'\t'+targetname+'\t'+str(ligand[1])+'\t'+'['+';'.join(smiles)+']'+'\n')
-
-    fout.close()
-    """
+    db.jobs.update({'_id': ObjectId(query.split('.')[0])}, {'$set':{'results': results}})
 
 def removefiles(query):
     filename = query.split('.')[0]

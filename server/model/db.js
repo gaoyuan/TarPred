@@ -27,7 +27,7 @@ var resultSchema = new mongoose.Schema({
     diseases: [mongoose.Types.String],
     neighbors: [{
         _id: String,
-        SMILES: String
+        smiles: String
     }]
 });
 

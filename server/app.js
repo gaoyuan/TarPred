@@ -356,6 +356,19 @@ app.post('/list', function(req, res){
   });
   return;
 });
+app.post('/details', function(req, res){
+  var id = req.body.id;
+  jobfunc.get_job_details(id, function(status, details){
+    if (status == 'error'){
+      res.status(500).json({
+        error: 'Database error! Please try again later.'
+      });
+    }else{
+      res.status(200).json(details);
+    }
+  });
+  return;
+});
 app.post('/progress', function(req, res){
   var id = req.body.id;
   jobfunc.get_job_progress(id, function(status, progress){

@@ -42,6 +42,18 @@ exports.get_job_progress = function get_job_progress(id, callback){
   });
 };
 
+// get details
+exports.get_job_details = function get_job_details(id, callback){
+  var Job = mongoose.model('Job');
+  Job.findById(id, function(err, result){
+    if (err) {
+      callback('error');
+    } else {
+      callback('success', result);
+    }
+  });
+};
+
 // increment progress
 exports.increment_job_progress = function increment_job_progress(id, callback){
   var Job = mongoose.model('Job');
@@ -57,7 +69,7 @@ exports.increment_job_progress = function increment_job_progress(id, callback){
 // list all jobs of a user
 exports.list_user_jobs = function list_user_jobs(username, callback){
   var Job = mongoose.model('Job');
-  Job.find({username: username}, function(err, results){
+  Job.find({username: username}, ['smiles', 'status', 'progress', 'date'], function(err, results){
     if (err) {
       console.log(err);
       callback('error');
