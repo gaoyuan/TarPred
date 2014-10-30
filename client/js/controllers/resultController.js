@@ -5,6 +5,7 @@ angular.module('TarPredApp')
         $location.path('/signin');
     }else{
         jobService.details($routeParams.id).success(function(res){
+            res = JSON.parse(res);
             $scope.smiles = res.smiles;
             $scope.results = res.results;
             // get all the unique structures we need to render
