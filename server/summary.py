@@ -14,6 +14,7 @@ import pickle
 import numpy as np
 import pymongo
 from bson.objectid import ObjectId
+import ast
 
 def result_formatting(query,topN):
 
@@ -54,6 +55,8 @@ def NearestStructure(query,fusionScore,d,Target_smi):
         smiles = [smiles[int(ligandid)-1] for ligandid in ligand_id_list]
 
         bindingDB, drugbank = d[target]
+        bindingDB = ast.literal_eval(bindingDB)
+        drugbank = ast.literal_eval(drugbank)
         score = ligand[1]
         neighbors = [{'_id': s.split()[1], 'smiles': s.split()[0]} for s in smiles]
 
@@ -75,7 +78,6 @@ def removefiles(query):
 def main():
     p =argparse.ArgumentParser()
     p.add_argument('-query',  required=True, help='smi/mol/sdf file(required), The query molecule, ')
-    p.print_help()
 
     args = p.parse_args()
     query = args.query

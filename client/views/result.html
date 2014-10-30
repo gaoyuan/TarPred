@@ -1,18 +1,28 @@
-<div class="container" style="max-width:800px">
+<div class="container" style="max-width:1000px">
     <div class="middlepart">
         This page is still under construction. Will be updated soon. Stay tuned :)
+        <h1>
+            Target Predictions for {{smiles}}
+        </h1>
         <table class="table table-striped table-bordered">
             <tr>
-                <th class="col-sm-6">Target Name</th>
-                <th class="col-sm-2">3NN score</th>
-                <th class="col-sm-2">Similar Structures</th>
+                <th class="col-sm-1">Rank</th>
+                <th class="col-sm-2">Target Name (BindingDB)</th>
+                <th class="col-sm-2">Target Name (DrugBank)</th>
+                <th class="col-sm-1">Gene ID</th>
+                <th class="col-sm-1">3NN score</th>
+                <th class="col-sm-2">Related Diseases</th>
+                <th class="col-sm-3">Similar Structures</th>
             </tr>
             <tr ng-repeat="result in results">
+                <td>{{index+1}}</td>
                 <td>{{result.bindingDB}}</td>
+                <td>{{result.drugbank}}</td>
+                <td>{{result.GeneID}}</td>
                 <td>{{result.score}}</td>
+                <td>{{result.diseases}}</td>
                 <td>{{result.neighbors}}</td>
             </tr>
         </table>
     </div>
-    {{smiles}}
 </div>

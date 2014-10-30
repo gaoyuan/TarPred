@@ -245,7 +245,7 @@ app.post('/create', function(req, res){
                                       jobfunc.increment_job_progress(job._id, function(status, progress){
                                         if (progress == 533){
                                           // summarize result
-                                          exec('summary.py -query ' + infile).on('close', function(code){
+                                          exec('python summary.py -query ' + infile).on('close', function(code){
                                             if (code == 0){
                                               // exit successfully
                                               exit_status = 2;
