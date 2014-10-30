@@ -19,7 +19,7 @@ angular.module('TarPredApp')
                     }
                 }
                 if (refresh){
-                    getlistRefresher = $timeout(getList, 1000);
+                    getlistRefresher = $timeout(getList, 2000);
                 }
             }).error(function(res){
                 noty({text: res.error, type:'error', timeout: 1000});
