@@ -4,7 +4,10 @@
         <h2>
             Target Predictions for {{smiles}}
         </h2>
-        <table class="table table-striped table-bordered">
+        <div class="right-download">            
+            <span class="glyphicon glyphicon-download-alt">Download</span>
+        <div>
+        <table class="table table-bordered">
             <tr>
                 <th class="col-sm-1">Rank</th>
                 <th class="col-sm-2">Target Name (BindingDB)</th>
@@ -16,11 +19,21 @@
             </tr>
             <tr ng-repeat="result in results">
                 <td>{{$index + 1}}</td>
-                <td>{{result.bindingDB}}</td>
-                <td>{{result.drugbank}}</td>
+                <td>
+                    <p ng-repeat="name in result.bindingDB">
+                        {{name}}
+                    </p>
+                </td>
+                <td>
+                    <p ng-repeat="name in result.drugbank">
+                        {{name}}
+                    </p>
+                </td>
                 <td>{{result.GeneID}}</td>
                 <td>{{result.score | number: 3}}</td>
-                <td>{{result.diseases}}</td>
+                    <p ng-repeat="name in result.diseases">
+                        {{name}}
+                    </p>
                 <td>
                     <div ng-repeat="neighbor in result.neighbors">
                         <div class="{{'_' + neighbor._id}}" />
