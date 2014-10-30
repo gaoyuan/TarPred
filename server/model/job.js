@@ -69,7 +69,7 @@ exports.increment_job_progress = function increment_job_progress(id, callback){
 // list all jobs of a user
 exports.list_user_jobs = function list_user_jobs(username, callback){
   var Job = mongoose.model('Job');
-  Job.find({username: username}, ['smiles', 'status', 'progress', 'date'], function(err, results){
+  Job.find({username: username}, 'smiles status progress date', function(err, results){
     if (err) {
       console.log(err);
       callback('error');
