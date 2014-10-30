@@ -32,7 +32,7 @@ angular.module('TarPredApp')
     };
 
     jobServiceAPI.svg = function(id){
-        return $http.post('/svg/', {
+        return $http.post('/svg', {
             id: id
         });
     };

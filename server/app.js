@@ -397,7 +397,7 @@ app.post('/svg', function(req, res){
       });
     }else{
       res.status(200).json({
-        svg: result.svg
+        svg: result
       });
     }
   });
