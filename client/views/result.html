@@ -23,7 +23,7 @@
                 <td>{{result.diseases}}</td>
                 <td>
                     <div ng-repeat="neighbor in result.neighbors">
-                        <div id="{{neighbor._id}}" />
+                        <div class="{{'_' + neighbor._id}}" />
                     </div>
                 </td>
             </tr>

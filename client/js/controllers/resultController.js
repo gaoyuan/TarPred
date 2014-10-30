@@ -7,10 +7,14 @@ angular.module('TarPredApp')
         jobService.details($routeParams.id).success(function(res){
             $scope.smiles = res.smiles;
             $scope.results = res.results;
+            // get all the unique structures we need to render
             var tasks = [];
             for (var i = 0; i < $scope.results.length; i++) {
                 for (var j = 0; j < $scope.results[i].neighbors.length; j ++) {
-                    tasks.push($scope.results[i].neighbors[j]._id);
+                    var tmp = $scope.results[i].neighbors[j]._id;
+                    if (tasks.indexOf(tmp) == -1){
+                        tasks.push(tmp);
+                    }
                 }
             }
             var renderSvgs = function(ids){
@@ -18,9 +22,9 @@ angular.module('TarPredApp')
                 if (id === undefined){
                     return;
                 }
-                jobService.svg($scope.results[i].neighbors[j]._id).success(function(res){
+                jobService.svg(id).success(function(res){
                     var svg = res.svg.replace(/(\r\n|\n|\r)/gm,"");
-                    angular.element.find('#' + id).html(svg);
+                    angular.element('._' + id).html(svg);
                     renderSvgs(ids);
                 });
             };
