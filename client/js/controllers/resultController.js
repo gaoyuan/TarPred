@@ -1,5 +1,5 @@
 angular.module('TarPredApp')
-.controller('resultController', function($scope, $routeParams, $cookies, $document, jobService){
+.controller('resultController', function($scope, $routeParams, $cookies, jobService){
     if (!$cookies.user){
         noty({text: 'Please sign in!', timeout: 1000});
         $location.path('/signin');
@@ -72,7 +72,7 @@ angular.module('TarPredApp')
                     tsv += rowEnd;
                 };
                 var tsvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(tsv);
-                $document.attr({
+                angular.element("#download").attr({
                     'download': filename,
                     'href': tsvData
                 });
