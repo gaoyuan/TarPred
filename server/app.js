@@ -390,14 +390,14 @@ app.post('/progress', function(req, res){
 });
 app.post('/svg', function(req, res){
   var id = req.body.id;
-  structurefunc.svg(id, function(status, svg){
+  structurefunc.svg(id, function(status, result){
     if (status == 'error'){
       res.status(500).json({
         error: 'Database error! Please try again later.'
       });
     }else{
       res.status(200).json({
-        svg: svg
+        svg: result.svg
       });
     }
   });
