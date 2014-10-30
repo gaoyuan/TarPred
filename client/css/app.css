@@ -16,24 +16,16 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 .navbar {
   background: #fff;
-  padding: 0.3em 0;
 }
 .navbar .navbar-brand {
   color: #000;
   font-family: georgia, serif;
   font-weight: bold;
-}
-.navbar ul.nav li a {
-  color: #111;
-  padding-left: 0;
-  padding-right: 0;
-  margin: 0 1.5em;
+  padding: 0 0 0 0;
 }
 .navbar ul.nav li a:hover {
+  box-shadow: 0 -2px red inset;
   color: #000;
-}
-.navbar ul.nav li button {
-  margin: 0.7em 0 0 1em;
 }
 
 .progress-bar {
@@ -83,6 +75,16 @@ body, h1, h2, h3, h4, h5, h6 {
   position: relative;
   top: 3px;
 }
+.logo-yellow {
+  color: #ffcb00;
+}
+.logo-blue {
+  color: #3435a7;
+}
+.logo-red {
+  color: #ff6969;
+}
+
 
 .subhead {
   font-size: 2em;
