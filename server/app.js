@@ -4,6 +4,7 @@ var express = require('express')
   , db = require('./model/db')
   , userfunc = require('./model/user.js')
   , jobfunc = require('./model/job.js')
+  , structurefunc = require('./model/structure.js')
   , captchafunc = require('./model/captcha.js')
   , http = require('http')
   , path = require('path')
@@ -48,6 +49,9 @@ app.get('/create', function(req, res){
 });
 app.get('/view', function(req, res){
   res.redirect('/#view');
+});
+app.get('/view/:id', function(req, res){
+  res.redirect('/#view/:id');
 });
 app.get('/download/:id', function(req, res){
   var file = path.join(__dirname, 'results', req.params.id + '.csv');
@@ -379,6 +383,21 @@ app.post('/progress', function(req, res){
     }else{
       res.status(200).json({
         progress: progress
+      });
+    }
+  });
+  return;
+});
+app.post('/svg', function(req, res){
+  var id = req.body.id;
+  structurefunc.svg(id, function(status, svg){
+    if (status == 'error'){
+      res.status(500).json({
+        error: 'Database error! Please try again later.'
+      });
+    }else{
+      res.status(200).json({
+        svg: svg
       });
     }
   });

@@ -31,6 +31,12 @@ angular.module('TarPredApp')
         });
     };
 
+    jobServiceAPI.svg = function(id){
+        return $http.post('/svg/', {
+            id: id
+        });
+    };
+
     jobServiceAPI.download = function(id){
         return $http.get('/download/' + id);
     };

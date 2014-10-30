@@ -19,9 +19,13 @@
                 <td>{{result.bindingDB}}</td>
                 <td>{{result.drugbank}}</td>
                 <td>{{result.GeneID}}</td>
-                <td>{{result.score}}</td>
+                <td>{{result.score | number: 3}}</td>
                 <td>{{result.diseases}}</td>
-                <td>{{result.neighbors}}</td>
+                <td>
+                    <div ng-repeat="neighbor in result.neighbors">
+                        {{neighbor.svg}}
+                    </div>
+                </td>
             </tr>
         </table>
     </div>
