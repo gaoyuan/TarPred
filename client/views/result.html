@@ -1,12 +1,16 @@
 <div class="container" style="max-width:1000px">
     <div class="middlepart">
         This page is still under construction. Will be updated soon. Stay tuned :)
-        <h2>
-            Target Predictions for {{smiles}}
-        </h2>
-        <div class="right-download">            
-            <span class="glyphicon glyphicon-download-alt">Download</span>
-        <div>
+        <div class="row">
+            <div class="col-sm-10">
+                <h2>
+                    Target Predictions for {{smiles}}
+                </h2>
+            </div>
+            <div class="col-sm-2 right-download clickable" ng-click="download()">            
+                <span class="glyphicon glyphicon-download-alt">Download</span>
+            <div>
+        </div>
         <table class="table table-bordered">
             <tr>
                 <th class="col-sm-1">Rank</th>
@@ -35,6 +39,7 @@
                     <p ng-repeat="name in result.diseases">
                         {{name}}
                     </p>
+                </td>
                 <td>
                     <div ng-repeat="neighbor in result.neighbors">
                         <div class="{{'_' + neighbor._id}}" />

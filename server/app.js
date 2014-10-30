@@ -53,10 +53,6 @@ app.get('/view', function(req, res){
 app.get('/view/:id', function(req, res){
   res.redirect('/#view/' + req.params.id);
 });
-app.get('/download/:id', function(req, res){
-  var file = path.join(__dirname, 'results', req.params.id + '.csv');
-  res.download(file);
-});
 
 app.post('/signup/check/username', function(req, res) {
   var username = req.body.username;

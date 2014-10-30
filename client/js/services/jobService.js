@@ -37,9 +37,5 @@ angular.module('TarPredApp')
         });
     };
 
-    jobServiceAPI.download = function(id){
-        return $http.get('/download/' + id);
-    };
-
     return jobServiceAPI;
 });
