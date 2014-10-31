@@ -67,6 +67,7 @@ def NearestStructure(query,fusionScore,d,dg,dd,Target_smi):
         neighbors = [{'_id': s.split()[1], 'smiles': s.split()[0]} for s in smiles]
 
         results.append({
+            '_id': ObjectId(),
             'bindingDB': bindingDB,
             'drugbank': drugbank,
             'GeneIDs': GeneIDs,

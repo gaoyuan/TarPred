@@ -20,6 +20,7 @@ var structureSchema = new mongoose.Schema({
 });
 
 var resultSchema = new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
     bindingDB: [mongoose.Types.String],
     drugbank: [mongoose.Types.String],
     GeneIDs: String,

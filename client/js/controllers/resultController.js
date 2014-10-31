@@ -5,7 +5,12 @@ angular.module('TarPredApp')
         $location.path('/signin');
     }else{
         jobService.preview($routeParams.id).success(function(res){
-            $scope.results = res;
+            $scope.smiles = res.smiles;
+            $scope.results = res.results;
+            console.log(res);
+            $scope.detail = function(){
+
+            };
             // get all the unique structures we need to render
             /*
             var tasks = [];
