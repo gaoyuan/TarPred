@@ -54,9 +54,9 @@ exports.job_result_preview = function job_result_preview(id, callback){
   });
 };
 // get details
-exports.get_job_details = function get_job_details(id, callback){
+exports.job_result_details = function get_job_details(job_id, result_id, callback){
   var Job = mongoose.model('Job');
-  Job.findById(id, function(err, result){
+  Job.findOne({_id: job_id, results._id: result_id}, function(err, result){
     if (err) {
       callback('error');
     } else {

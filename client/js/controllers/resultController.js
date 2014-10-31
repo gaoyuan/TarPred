@@ -7,9 +7,10 @@ angular.module('TarPredApp')
         jobService.preview($routeParams.id).success(function(res){
             $scope.smiles = res.smiles;
             $scope.results = res.results;
-            console.log(res);
-            $scope.detail = function(){
-
+            $scope.detail = function(result_id){
+                jobService.details($routeParams.id, result_id).success(function(res)){
+                    console.log(res);
+                }
             };
             // get all the unique structures we need to render
             /*
