@@ -22,9 +22,12 @@ var structureSchema = new mongoose.Schema({
 var resultSchema = new mongoose.Schema({
     bindingDB: [mongoose.Types.String],
     drugbank: [mongoose.Types.String],
-    GeneID: String,
+    GeneIDs: String,
     score: Number,
-    diseases: [mongoose.Types.String],
+    diseases: [{
+        name: String,
+        count: Number
+    }],
     neighbors: [{
         _id: String,
         smiles: String

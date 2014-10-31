@@ -42,7 +42,7 @@ def result_formatting(query,topN):
     return fusionScore
 
 
-def NearestStructure(query,fusionScore,d,Target_smi):
+def NearestStructure(query,fusionScore,d,dg,dd,Target_smi):
     # store the result in mongodb
     client = pymongo.MongoClient('mongodb://root:miss_babyface@localhost:27017/TarPred')
     db = client.TarPred
@@ -63,7 +63,9 @@ def NearestStructure(query,fusionScore,d,Target_smi):
         results.append({
             'bindingDB': bindingDB,
             'drugbank': drugbank,
+            'GeneIDs': dg[target],
             'score': score,
+            'diseases': dd[target],
             'neighbors': neighbors
         })
 
@@ -86,12 +88,20 @@ def main():
     d = pickle.load(fname)
     fname.close()
 
+    fname = open(os.getcwd()+ '\\RefBase\\'+'Target_ID2Gene.pickle','rb')
+    dg = pickle.load(fname)
+    fname.close()
+
+    fname = open(os.getcwd()+ '\\RefBase\\'+'Target_ID2Disease.pickle','rb')
+    dd = pickle.load(fname)
+    fname.close()
+
     fin = open(os.getcwd()+ '\\RefBase\\'+'Ref_Target_smi.pickle','rb')
     Target_smi = pickle.load(fin)
     fin.close()
 
     fusionScore = result_formatting(query,30)
-    NearestStructure(query,fusionScore,d,Target_smi)
+    NearestStructure(query,fusionScore,d,dg,dd,Target_smi)
 
     removefiles(query)
 
