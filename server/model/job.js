@@ -53,14 +53,15 @@ exports.job_result_preview = function job_result_preview(id, callback){
     }
   });
 };
+
 // get details
-exports.job_result_details = function get_job_details(job_id, result_id, callback){
+exports.job_result_details = function get_job_details(job_id, result_index, callback){
   var Job = mongoose.model('Job');
-  Job.findOne({_id: job_id, results._id: result_id}, function(err, result){
+  Job.findbyId(job_id, 'results',function(err, ans){
     if (err) {
       callback('error');
     } else {
-      callback('success', result);
+      callback('success', ans.results[result_index]);
     }
   });
 };

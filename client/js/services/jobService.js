@@ -25,10 +25,10 @@ angular.module('TarPredApp')
         });        
     }
 
-    jobServiceAPI.details = function(job_id, result_id){
+    jobServiceAPI.details = function(job_id, result_index){
         return $http.post('/details', {
-            job_id: id,
-            result_id: id
+            job_id: job_id,
+            result_index: result_index
         });        
     }
 

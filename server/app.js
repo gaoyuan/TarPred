@@ -371,8 +371,8 @@ app.post('/preview', function(req, res){
 });
 app.post('/details', function(req, res){
   var job_id = req.body.job_id;
-  var result_id = req.body.result_id;
-  jobfunc.job_result_details(job_id, result_id, function(status, details){
+  var result_index = req.body.result_index;
+  jobfunc.job_result_details(job_id, result_index, function(status, details){
     if (status == 'error'){
       res.status(500).json({
         error: 'Database error! Please try again later.'
