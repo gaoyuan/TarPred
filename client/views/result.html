@@ -12,37 +12,13 @@
             <table class="table table-bordered">
                 <tr>
                     <th class="col-sm-1">Rank</th>
-                    <th class="col-sm-2">Target Name (BindingDB)</th>
-                    <th class="col-sm-2">Target Name (DrugBank)</th>
-                    <th class="col-sm-1">Gene ID</th>
-                    <th class="col-sm-1">3NN score</th>
-                    <th class="col-sm-2">Related Diseases</th>
-                    <th class="col-sm-3">Similar Structures</th>
+                    <th class="col-sm-9">Target</th>
+                    <th class="col-sm-2">3NN score</th>
                 </tr>
                 <tr ng-repeat="result in results">
                     <td>{{$index + 1}}</td>
-                    <td>
-                        <p ng-repeat="name in result.bindingDB">
-                            {{name}}
-                        </p>
-                    </td>
-                    <td>
-                        <p ng-repeat="name in result.drugbank">
-                            {{name}}
-                        </p>
-                    </td>
-                    <td>{{result.GeneIDs}}</td>
+                    <td>{{result.bindingDB[0]}}</td>
                     <td>{{result.score | number: 3}}</td>
-                    <td>
-                        <p ng-repeat="name in result.diseases">
-                            {{name}}
-                        </p>
-                    </td>
-                    <td>
-                        <div ng-repeat="neighbor in result.neighbors">
-                            <div class="{{'_' + neighbor._id}}" />
-                        </div>
-                    </td>
                 </tr>
             </table>
         </div>

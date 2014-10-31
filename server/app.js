@@ -356,7 +356,7 @@ app.post('/list', function(req, res){
   });
   return;
 });
-app.post('/details', function(req, res){
+app.post('/preview', function(req, res){
   var id = req.body.id;
   jobfunc.job_result_preview(id, function(status, result){
     if (status == 'error'){
