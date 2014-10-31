@@ -4,10 +4,10 @@ angular.module('TarPredApp')
         noty({text: 'Please sign in!', timeout: 1000});
         $location.path('/signin');
     }else{
-        jobService.details($routeParams.id).success(function(res){
-            $scope.smiles = res.smiles;
-            $scope.results = res.results;
+        jobService.preview($routeParams.id).success(function(res){
+            console.log(res);
             // get all the unique structures we need to render
+            /*
             var tasks = [];
             for (var i = 0; i < $scope.results.length; i++) {
                 for (var j = 0; j < $scope.results[i].neighbors.length; j ++) {
@@ -31,7 +31,7 @@ angular.module('TarPredApp')
                 });
             };
             renderSvgs(tasks);
-
+            */
             // download the result
             $scope.download = function(){
                 var filename = res._id + '.tsv'

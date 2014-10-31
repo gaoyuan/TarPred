@@ -358,6 +358,19 @@ app.post('/list', function(req, res){
 });
 app.post('/details', function(req, res){
   var id = req.body.id;
+  jobfunc.job_result_preview(id, function(status, result){
+    if (status == 'error'){
+      res.status(500).json({
+        error: 'Database error! Please try again later.'
+      });
+    }else{
+      res.status(200).json(result);
+    }
+  });
+  return;
+});
+app.post('/details', function(req, res){
+  var id = req.body.id;
   jobfunc.get_job_details(id, function(status, details){
     if (status == 'error'){
       res.status(500).json({

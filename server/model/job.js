@@ -42,6 +42,17 @@ exports.get_job_progress = function get_job_progress(id, callback){
   });
 };
 
+// result preview
+exports.job_result_preview = function job_result_preview(id, callback){
+  var Job = mongoose.model('Job');
+  Job.findById(id, 'results.bindingDB results.score', function(err, result){
+    if (err) {
+      callback('error');
+    } else {
+      callback('success', result);
+    }
+  });
+};
 // get details
 exports.get_job_details = function get_job_details(id, callback){
   var Job = mongoose.model('Job');
