@@ -23,7 +23,9 @@ angular.module('TarPredApp')
                     return;
                 }
                 jobService.svg(id).success(function(res){
-                    var svg = res.svg.replace(/(\r\n|\n|\r)/gm,"");
+                    var svg = res.svg.replace(/(\r\n|\n|\r)/gm,'')
+                        .replace('<?xml version=\"1.0\"?>', '')
+                        .replace('xmlns.+schema\"', 'viewbox="0 0 50 20"');
                     angular.element('._' + id).html(svg);
                     renderSvgs(ids);
                 });
