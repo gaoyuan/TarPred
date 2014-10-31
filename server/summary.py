@@ -57,15 +57,21 @@ def NearestStructure(query,fusionScore,d,dg,dd,Target_smi):
         bindingDB, drugbank = d[target]
         bindingDB = ast.literal_eval(bindingDB)
         drugbank = ast.literal_eval(drugbank)
+        GeneIDs = ''
+        if target in dg:
+            GeneIDs = dg[target]
         score = ligand[1]
+        diseases = []
+        if target in dd:
+            diseases = dd[target]
         neighbors = [{'_id': s.split()[1], 'smiles': s.split()[0]} for s in smiles]
 
         results.append({
             'bindingDB': bindingDB,
             'drugbank': drugbank,
-            'GeneIDs': dg[target],
+            'GeneIDs': GeneIDs,
             'score': score,
-            'diseases': dd[target],
+            'diseases': diseases,
             'neighbors': neighbors
         })
 
