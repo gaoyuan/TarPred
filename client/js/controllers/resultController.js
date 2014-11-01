@@ -1,5 +1,5 @@
 angular.module('TarPredApp')
-.controller('resultController', function($scope, $routeParams, $cookies, $document, $timeout, jobService){
+.controller('resultController', function($scope, $routeParams, $cookies, $location, $anchorScroll, $timeout, jobService){
     if (!$cookies.user){
         noty({text: 'Please sign in!', timeout: 1000});
         $location.path('/signin');
@@ -24,7 +24,6 @@ angular.module('TarPredApp')
             };
 
             $scope.detail = function(result_index){
-                $document.scrollToElement(angular.element('#showDetail'), 0, 500);
                 jobService.details($routeParams.id, result_index).success(function(res){
                     $scope.ranking = result_index + 1;
                     $scope.showDetail = true;
@@ -34,11 +33,15 @@ angular.module('TarPredApp')
                     $scope.score = res.score;
                     $scope.diseases = res.diseases;
                     $scope.neighbors = res.neighbors;
-                    ids = []
+                    ids = [];
                     for (var i = 0; i < res.neighbors.length; i++) {
                         ids.push(res.neighbors[i]._id);
                     };
                     $timeout(function(){
+                        var old = $location.hash();
+                        $location.hash('showDetail');
+                        $anchorScroll();
+                        $location.hash(old);
                         renderSvgs(ids);
                     }, 0);
                     //renderSvgs(res.neighbors);

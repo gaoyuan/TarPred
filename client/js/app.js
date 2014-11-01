@@ -1,4 +1,4 @@
-var app = angular.module('TarPredApp', ['ngRoute', 'ngCookies', 'duScroll']);
+var app = angular.module('TarPredApp', ['ngRoute', 'ngCookies']);
 
 app.config(function($routeProvider, $locationProvider) {
     if (window.history && history.pushState){

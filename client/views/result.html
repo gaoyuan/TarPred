@@ -1,8 +1,8 @@
 <div class="container" style="max-width:1000px">
     <div class="middlepart">
         <div class="page-header">
-            <h1>Target Predictions for {{smiles}} <small><span class="glyphicon glyphicon-download-alt"></span>
-            <a href="#" id="download" ng-click="download()">Download</a></small></h1>
+            <h2>Target Predictions for {{smiles}} <small><span class="glyphicon glyphicon-download-alt"></span>
+            <a href="#" id="download" ng-click="download()">Download</a></small></h2>
         </div>
         <table class="table table-hover table-condensed">
             <tr>
@@ -17,11 +17,11 @@
             </tr>
         </table>
         <div id="showDetail" ng-show="showDetail">
-            <div class="introduction">
-                <div class="introduction-ball">
-                    {{ranking}}
-                </div>
-            </div>
+            <div class="skillbar clearfix">
+            <div class="skillbar-title" style="background: #124e8c;"><span>Rank. {{ranking}}</span></div>
+            <div class="skillbar-bar" style="background: #4288d0; width:{{score*100}}%;"></div>
+            <div class="skill-bar-percent">{{score | number: 3}}</div>
+            </div> <!-- End Skill Bar -->
             <h4>Binding DB Name</h4>
                 <p>{{bindingDB.join(', ')}}</p>
             <h4>DrugBank Name</h4>
