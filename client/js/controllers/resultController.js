@@ -1,5 +1,5 @@
 angular.module('TarPredApp')
-.controller('resultController', function($scope, $routeParams, $cookies, jobService){
+.controller('resultController', function($scope, $routeParams, $cookies, $document, $timeout, jobService){
     if (!$cookies.user){
         noty({text: 'Please sign in!', timeout: 1000});
         $location.path('/signin');
@@ -7,22 +7,8 @@ angular.module('TarPredApp')
         jobService.preview($routeParams.id).success(function(res){
             $scope.smiles = res.smiles;
             $scope.results = res.results;
-            $scope.detail = function(result_index){
-                jobService.details($routeParams.id, result_index).success(function(res){
-                    console.log(res);
-                });
-            };
-            // get all the unique structures we need to render
-            /*
-            var tasks = [];
-            for (var i = 0; i < $scope.results.length; i++) {
-                for (var j = 0; j < $scope.results[i].neighbors.length; j ++) {
-                    var tmp = $scope.results[i].neighbors[j]._id;
-                    if (tasks.indexOf(tmp) == -1){
-                        tasks.push(tmp);
-                    }
-                }
-            }
+            $scope.showDetail = false;
+
             var renderSvgs = function(ids){
                 var id = ids.shift();
                 if (id === undefined){
@@ -32,12 +18,32 @@ angular.module('TarPredApp')
                     var svg = res.svg.replace(/(\r\n|\n|\r)/gm,'')
                         .replace('<?xml version=\"1.0\"?>', '')
                         .replace('xmlns.+schema\"', '');
-                    angular.element('._' + id).html(svg);
+                    angular.element('#_' + id).html(svg);
                     renderSvgs(ids);
                 });
             };
-            renderSvgs(tasks);
-            */
+
+            $scope.detail = function(result_index){
+                $document.scrollToElement(angular.element('#showDetail'), 0, 500);
+                jobService.details($routeParams.id, result_index).success(function(res){
+                    $scope.ranking = result_index + 1;
+                    $scope.showDetail = true;
+                    $scope.bindingDB = res.bindingDB;
+                    $scope.drugbank = res.drugbank;
+                    $scope.GeneIDs = res.GeneIDs;
+                    $scope.score = res.score;
+                    $scope.diseases = res.diseases;
+                    $scope.neighbors = res.neighbors;
+                    ids = []
+                    for (var i = 0; i < res.neighbors.length; i++) {
+                        ids.push(res.neighbors[i]._id);
+                    };
+                    $timeout(function(){
+                        renderSvgs(ids);
+                    }, 0);
+                    //renderSvgs(res.neighbors);
+                });
+            };
             // download the result
             $scope.download = function(){
                 var filename = res._id + '.tsv'

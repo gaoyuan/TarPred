@@ -57,7 +57,7 @@ exports.job_result_preview = function job_result_preview(id, callback){
 // get details
 exports.job_result_details = function get_job_details(job_id, result_index, callback){
   var Job = mongoose.model('Job');
-  Job.findbyId(job_id, 'results',function(err, ans){
+  Job.findById(job_id, 'results',function(err, ans){
     if (err) {
       callback('error');
     } else {
