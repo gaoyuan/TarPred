@@ -55,8 +55,6 @@ def NearestStructure(query,fusionScore,d,dg,dd,Target_smi):
         smiles = [smiles[int(ligandid)-1] for ligandid in ligand_id_list]
 
         bindingDB, drugbank = d[target]
-        bindingDB = ast.literal_eval(bindingDB)
-        drugbank = ast.literal_eval(drugbank)
         GeneIDs = ''
         if target in dg:
             GeneIDs = dg[target]
@@ -91,7 +89,7 @@ def main():
     args = p.parse_args()
     query = args.query
 
-    fname = open(os.getcwd()+ '\\RefBase\\'+'Target_ID2Name.pickle','rb')
+    fname = open(os.getcwd()+ '\\RefBase\\'+'Target_ID2Names.pickle','rb')
     d = pickle.load(fname)
     fname.close()
 
