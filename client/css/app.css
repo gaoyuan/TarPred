@@ -257,6 +257,10 @@ input.ng-valid.ng-dirty {
   -webkit-animation: rotating 1s linear infinite;
 }
 
+.rotatinginline {
+  -webkit-animation: rotating 1s linear infinite;  
+}
+
 
 footer {
   background: #111;

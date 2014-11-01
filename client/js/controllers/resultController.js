@@ -1,13 +1,16 @@
 angular.module('TarPredApp')
-.run(['$anchorScroll', function($anchorScroll) {
+.run(function($anchorScroll) {
     $anchorScroll.yOffset = 100;
-}])
+})
 .controller('resultController', function($scope, $routeParams, $cookies, $location, $anchorScroll, $timeout, jobService){
     if (!$cookies.user){
         noty({text: 'Please sign in!', timeout: 1000});
         $location.path('/signin');
     }else{
         jobService.preview($routeParams.id).success(function(res){
+            $scope.preDownload = true;
+            $scope.inDownload = false;
+            $scope.afterDownload = false;
             $scope.smiles = res.smiles;
             $scope.results = res.results;
             $scope.showDetail = false;
@@ -55,8 +58,10 @@ angular.module('TarPredApp')
                     }, 0);
                 });
             };
-            // download the result
-            $scope.download = function(){
+            // generate download link
+            $scope.generateDownload = function(){
+                $scope.preDownload = false;
+                $scope.inDownload = true;
                 jobService.results($routeParams.id).success(function(res){
                     var filename = $routeParams.id + '.tsv'
                         ,rowEnd = '\r\n'
@@ -94,6 +99,8 @@ angular.module('TarPredApp')
                         'download': filename,
                         'href': tsvData
                     });
+                    $scope.inDownload = false;
+                    $scope.afterDownload = true;
                 });
             };
         });

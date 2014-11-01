@@ -1,8 +1,8 @@
 <div class="container" style="max-width:1000px">
     <div class="middlepart">
         <div class="page-header">
-            <h2>Target Predictions for {{smiles}} <small><span class="glyphicon glyphicon-download-alt"></span>
-            <a href="#" id="download" ng-click="download()">Download</a></small></h2>
+            <h2>Target Predictions for {{smiles}} <small><span title="click to generate download link" ng-show="preDownload" class="glyphicon glyphicon-download-alt clickable" ng-click="generateDownload()"></span><span class="glyphicon glyphicon-refresh rotatinginline" ng-show="inDownload"></span>
+            <a href="#" id="download" ng-show="afterDownload">Download</a></small></h2>
         </div>
         <table class="table table-hover table-condensed">
             <tr>
@@ -27,7 +27,8 @@
             <h4>DrugBank Name</h4>
                 <p>{{drugbank.join(', ')}}</p>
             <h4>Gene IDs</h4>
-                <p>{{GeneIDs.split('|').join(', ')}}</p>
+                <p ng-hide="GeneIDs.length">No Gene ID information on file.</p>            
+                <p ng-show="GeneIDs.length">{{GeneIDs.split('|').join(', ')}}</p>
             <h4>Related Diseases</h4>
                 <p ng-hide="words.length">Disease information in not available for this target.</p>
                 <jqcloud ng-show="words.length" words="words" width="500" height="350"></jqcloud>

@@ -35,7 +35,7 @@ angular.module('angular-jqcloud', []).directive('jqcloud', ['$parse', function($
       
       $elem.jQCloud($scope.words, options);
       
-      $scope.$watchCollection('words', function() {
+      $scope.$watch('words', function() {
         $scope.$evalAsync(function() {
           var words = [];
           $.extend(words,$scope.words);
