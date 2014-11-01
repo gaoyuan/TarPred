@@ -1,4 +1,7 @@
 angular.module('TarPredApp')
+.run(['$anchorScroll', function($anchorScroll) {
+    $anchorScroll.yOffset = 100;
+}])
 .controller('resultController', function($scope, $routeParams, $cookies, $location, $anchorScroll, $timeout, jobService){
     if (!$cookies.user){
         noty({text: 'Please sign in!', timeout: 1000});
@@ -62,7 +65,7 @@ angular.module('TarPredApp')
                     var tsv = '"Target Name (BindingDB)"\t"Target Name (DrugBank)"\t"Gene ID"\t"3NN score"\t"Related Diseases"\t"Similar Structures"' + rowEnd;
                     for (var i = 0; i < results.length; i++) {
                         tsv += '"';
-                        tsv += results[i].bindingD.join('|');
+                        tsv += results[i].bindingDB.join('|');
                         tsv += '"\t"';
                         tsv += results[i].drugbank.join('|');
                         tsv += '"\t"';
