@@ -66,6 +66,18 @@ exports.job_result_details = function get_job_details(job_id, result_index, call
   });
 };
 
+// get job results
+exports.job_results = function job_results(id, callback){
+  var Job = mongoose.model('Job');
+  Job.findById(id, 'results',function(err, ans){
+    if (err) {
+      callback('error');
+    } else {
+      callback('success', ans);
+    }
+  });
+};
+
 // increment progress
 exports.increment_job_progress = function increment_job_progress(id, callback){
   var Job = mongoose.model('Job');

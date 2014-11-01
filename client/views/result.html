@@ -29,7 +29,8 @@
             <h4>Gene IDs</h4>
                 <p>{{GeneIDs.split('|').join(', ')}}</p>
             <h4>Related Diseases</h4>
-                <jqcloud words="words" width="500" height="350"></jqcloud>
+                <p ng-if="words.length==0">Disease information in not available for this target.</p>
+                <jqcloud ng-if="words.length!=0" words="words" width="500" height="350"></jqcloud>
             <h4>Similar Structures</h4>
                 <div><span ng-repeat="neighbor in neighbors" id="_{{neighbor._id}}"></span></div>
         </div>

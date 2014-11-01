@@ -383,6 +383,19 @@ app.post('/details', function(req, res){
   });
   return;
 });
+app.post('/results', function(req, res){
+  var id = req.body.id;
+  jobfunc.job_results(id, function(status, results){
+    if (status == 'error'){
+      res.status(500).json({
+        error: 'Database error! Please try again later.'
+      });
+    }else{
+      res.status(200).json(results);
+    }
+  });
+  return;
+});
 app.post('/progress', function(req, res){
   var id = req.body.id;
   jobfunc.get_job_progress(id, function(status, progress){
