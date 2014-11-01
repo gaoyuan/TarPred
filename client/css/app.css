@@ -124,7 +124,7 @@ body, h1, h2, h3, h4, h5, h6 {
   position:absolute;
   top:0;
   left:0;
-width:110px;
+  width:110px;
   font-weight:bold;
   font-size:13px;
   color:#ffffff;
@@ -152,6 +152,7 @@ width:110px;
 }
 
 .skillbar-bar {
+  left: 110px;
   height:35px;
   background:#6adcfa;
   border-radius:3px;

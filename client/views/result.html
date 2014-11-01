@@ -31,7 +31,7 @@
                 <p ng-show="GeneIDs.length">{{GeneIDs.split('|').join(', ')}}</p>
             <h4>Related Diseases</h4>
                 <p ng-hide="words.length">Disease information in not available for this target.</p>
-                <jqcloud ng-show="words.length" words="words" width="500" height="350"></jqcloud>
+                <jqcloud ng-if="words.length" words="words" width="500" height="350"></jqcloud>
             <h4>Similar Structures</h4>
                 <div><span ng-repeat="neighbor in neighbors" id="_{{neighbor._id}}"></span></div>
         </div>
