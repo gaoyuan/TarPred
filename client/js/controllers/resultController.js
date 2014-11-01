@@ -69,7 +69,7 @@ angular.module('TarPredApp')
                         tsv += '"\t"';
                         tsv += results[i].drugbank.join('|');
                         tsv += '"\t"';
-                        tsv += results[i].GeneID;
+                        tsv += results[i].GeneIDs;
                         tsv += '"\t';
                         tsv += results[i].score.toString();
                         tsv += '\t"';
