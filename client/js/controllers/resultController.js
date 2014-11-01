@@ -31,7 +31,13 @@ angular.module('TarPredApp')
                     $scope.drugbank = res.drugbank;
                     $scope.GeneIDs = res.GeneIDs;
                     $scope.score = res.score;
-                    $scope.diseases = res.diseases;
+                    $scope.words = [];
+                    for (var i = 0; i < res.diseases.length; i++) {
+                        $scope.words.push({
+                            text: res.diseases[i].name,
+                            weight: res.diseases[i].count
+                        });
+                    };
                     $scope.neighbors = res.neighbors;
                     ids = [];
                     for (var i = 0; i < res.neighbors.length; i++) {
@@ -44,7 +50,6 @@ angular.module('TarPredApp')
                         $location.hash(old);
                         renderSvgs(ids);
                     }, 0);
-                    //renderSvgs(res.neighbors);
                 });
             };
             // download the result
