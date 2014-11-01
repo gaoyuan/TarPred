@@ -15,6 +15,8 @@ angular.module('TarPredApp')
             $scope.results = res.results;
             $scope.showDetail = false;
 
+            angular.element('.glyphicon-question-sign').tooltip();
+
             var renderSvgs = function(ids){
                 var id = ids.shift();
                 if (id === undefined){

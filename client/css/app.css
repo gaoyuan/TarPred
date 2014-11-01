@@ -128,7 +128,6 @@ body, h1, h2, h3, h4, h5, h6 {
   font-weight:bold;
   font-size:13px;
   color:#ffffff;
-  background:#6adcfa;
   -webkit-border-top-left-radius:3px;
   -webkit-border-bottom-left-radius:4px;
   -moz-border-radius-topleft:3px;
@@ -139,7 +138,6 @@ body, h1, h2, h3, h4, h5, h6 {
 
 .skillbar-title span {
   display:block;
-  background:rgba(0, 0, 0, 0.1);
   padding:0 20px;
   height:35px;
   line-height:35px;
@@ -152,9 +150,8 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 .skillbar-bar {
-  left: 110px;
   height:35px;
-  background:#6adcfa;
+  background:#d35400;
   border-radius:3px;
   -moz-border-radius:3px;
   -webkit-border-radius:3px;
@@ -262,6 +259,15 @@ input.ng-valid.ng-dirty {
   -webkit-animation: rotating 1s linear infinite;  
 }
 
+.glyphicon-question-sign {
+  font-size: 12px;
+}
+
+.tooltip-inner {
+    max-width: 500px;
+    /* If max-width does not work, try using width instead */
+    width: 500px; 
+}
 
 footer {
   background: #111;

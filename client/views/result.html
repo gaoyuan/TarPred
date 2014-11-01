@@ -18,9 +18,9 @@
         </table>
         <div id="showDetail" ng-show="showDetail">
             <div class="skillbar clearfix">
-            <div class="skillbar-title" style="background: #124e8c;"><span>Rank. {{ranking}}</span></div>
-            <div class="skillbar-bar" style="background: #4288d0; width:{{score*100}}%;"></div>
-            <div class="skill-bar-percent">{{score | number: 3}}</div>
+                <div class="skillbar-title"><span>Rank. {{ranking}}</span></div>
+                <div class="skillbar-bar" style="width:{{score*100}}%;"></div>
+                <div class="skill-bar-percent">{{score | number: 3}}</div>
             </div> <!-- End Skill Bar -->
             <h4>Binding DB Name</h4>
                 <p>{{bindingDB.join(', ')}}</p>
@@ -29,10 +29,10 @@
             <h4>Gene IDs</h4>
                 <p ng-hide="GeneIDs.length">No Gene ID information on file.</p>            
                 <p ng-show="GeneIDs.length">{{GeneIDs.split('|').join(', ')}}</p>
-            <h4>Related Diseases</h4>
+            <h4>Related Diseases <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Diseases relevant to this target is collected through literature mining. Size of a disease in the text cloud represents its number of occurrences in the corpus."></i></h4>
                 <p ng-hide="words.length">Disease information in not available for this target.</p>
                 <jqcloud ng-if="words.length" words="words" width="500" height="350"></jqcloud>
-            <h4>Similar Structures</h4>
+            <h4>Similar Structures <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="These are the three nearest neighbors (3NN) of the query compound in the ligand set."></i></h4>
                 <div><span ng-repeat="neighbor in neighbors" id="_{{neighbor._id}}"></span></div>
         </div>
     </div>
