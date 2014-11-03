@@ -42,7 +42,7 @@ def result_formatting(query,topN):
     return fusionScore
 
 
-def NearestStructure(query,fusionScore,d,dg,dd,Target_smi):
+def NearestStructure(query,fusionScore,d,dg,dd_de,dd_inf,Target_smi):
     # store the result in mongodb
     client = pymongo.MongoClient('mongodb://root:miss_babyface@localhost:27017/TarPred')
     db = client.TarPred
@@ -59,9 +59,12 @@ def NearestStructure(query,fusionScore,d,dg,dd,Target_smi):
         if target in dg:
             GeneIDs = dg[target]
         score = ligand[1]
-        diseases = []
-        if target in dd:
-            diseases = dd[target]
+        diseasesDE = []
+        diseasesINF = []
+        if target in dd_de:
+            diseasesDE = dd_de[target]
+        if target in dd_inf:
+            diseasesINF = dd_inf[target]
         neighbors = [{'_id': s.split()[1], 'smiles': s.split()[0]} for s in smiles]
 
         results.append({
@@ -70,7 +73,8 @@ def NearestStructure(query,fusionScore,d,dg,dd,Target_smi):
             'drugbank': drugbank,
             'GeneIDs': GeneIDs,
             'score': score,
-            'diseases': diseases,
+            'diseasesDE': diseasesDE,
+            'diseasesINF': diseasesINF,
             'neighbors': neighbors
         })
 
@@ -97,8 +101,12 @@ def main():
     dg = pickle.load(fname)
     fname.close()
 
-    fname = open(os.getcwd()+ '\\RefBase\\'+'Target_ID2Disease.pickle','rb')
-    dd = pickle.load(fname)
+    fname = open(os.getcwd()+ '\\RefBase\\'+'Target_ID2Disease_DE.pickle','rb')
+    dd_de = pickle.load(fname)
+    fname.close()
+
+    fname = open(os.getcwd()+ '\\RefBase\\'+'Target_ID2Disease_INF.pickle','rb')
+    dd_inf = pickle.load(fname)
     fname.close()
 
     fin = open(os.getcwd()+ '\\RefBase\\'+'Ref_Target_smi.pickle','rb')
@@ -106,7 +114,7 @@ def main():
     fin.close()
 
     fusionScore = result_formatting(query,30)
-    NearestStructure(query,fusionScore,d,dg,dd,Target_smi)
+    NearestStructure(query,fusionScore,d,dg,dd_de,dd_inf,Target_smi)
 
     removefiles(query)
 

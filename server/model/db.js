@@ -25,7 +25,11 @@ var resultSchema = new mongoose.Schema({
     drugbank: [mongoose.Types.String],
     GeneIDs: String,
     score: Number,
-    diseases: [{
+    diseasesDE: [{
+        name: String,
+        count: Number
+    }],
+    diseasesINF: [{
         name: String,
         count: Number
     }],

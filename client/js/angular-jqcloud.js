@@ -1,51 +1,44 @@
-/*!
- * Angular jQCloud
- * For jQCloud 2 (https://github.com/mistic100/jQCloud) 
- * Copyright 2014 Damien "Mistic" Sorel (http://www.strangeplanet.fr)
- * Licensed under MIT (http://opensource.org/licenses/MIT)
- */
-
-angular.module('angular-jqcloud', []).directive('jqcloud', ['$parse', function($parse) {
-  // get existing options
-  var defaults = jQuery.fn.jQCloud.defaults.get(),
-      jqcOptions = [];
-  
-  for (var opt in defaults) {
-    if (defaults.hasOwnProperty(opt)) {
-      jqcOptions.push(opt);
-    }
-  }
-  
+angular.module('angular-jqcloud', []).directive('jqcloud', function() {
   return {
     restrict: 'E',
-    template: '<div></div>',
+    template: '<div class="col-md-6"></div>',
     replace: true,
     scope: {
-      words: '=words'
+      words: '@words'
     },
-    link: function($scope, $elem, $attr) {
-      var options = {};
-      
-      for (var i=0, l=jqcOptions.length; i<l; i++) {
-        var opt = jqcOptions[i];
-        if ($attr[opt] !== undefined) {
-          options[opt] = $parse($attr[opt])();
+    link: function(scope, elem, attrs) {
+      if (scope.words === undefined) {
+        return;
+      } else if (scope.words.length === 0) {
+        if (attrs.colorclass){
+          // inferenced
+          elem.append("<p>Inferenced disease information in not available for this target.</p>");
+        } else {
+          // direct
+          elem.append("<p>Direct disease information in not available for this target.</p>");
+        }
+      } else {
+        if (attrs.colorclass) {
+          elem.jQCloud(scope.words, {
+            classPattern: null,
+            colors: ['rgb(255,245,240)','rgb(254,224,210)','rgb(252,187,161)','rgb(252,146,114)','rgb(251,106,74)','rgb(239,59,44)','rgb(203,24,29)','rgb(165,15,21)','rgb(103,0,13)']
+          });
+          scope.watch('words', function(value){
+            elem.jQCloud(value, {
+              classPattern: null,
+              colors: ['rgb(255,245,240)','rgb(254,224,210)','rgb(252,187,161)','rgb(252,146,114)','rgb(251,106,74)','rgb(239,59,44)','rgb(203,24,29)','rgb(165,15,21)','rgb(103,0,13)']
+            });
+          });
+        } else {
+          elem.jQCloud(scope.words);
+          scope.watch('words', function(value){
+            elem.jQCloud(value);
+          })
         }
       }
-      
-      $elem.jQCloud($scope.words, options);
-      
-      $scope.$watch('words', function() {
-        $scope.$evalAsync(function() {
-          var words = [];
-          $.extend(words,$scope.words);
-          $elem.jQCloud('update', words);
-        });
-      });
-    
-      $elem.bind('$destroy', function() {
-        $elem.jQCloud('destroy');
+      elem.bind('$destroy', function() {
+        elem.jQCloud('destroy');
       });
     }
   };
-}]);
+});

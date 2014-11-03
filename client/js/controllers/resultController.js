@@ -39,13 +39,20 @@ angular.module('TarPredApp')
                     $scope.drugbank = res.drugbank;
                     $scope.GeneIDs = res.GeneIDs;
                     $scope.score = res.score;
-                    $scope.words = [];
-                    for (var i = 0; i < res.diseases.length; i++) {
-                        $scope.words.push({
-                            text: res.diseases[i].name,
-                            weight: res.diseases[i].count
+                    $scope.diseasesDE = [];
+                    for (var i = 0; i < res.diseasesDE.length; i++) {
+                        $scope.diseasesDE.push({
+                            text: res.diseasesDE[i].name,
+                            weight: res.diseasesDE[i].count
                         });
                     };
+                    $scope.diseasesINF = [];
+                    for (var i = 0; i < res.diseasesINF.length; i++) {
+                        $scope.diseasesINF.push({
+                            text: res.diseasesINF[i].name,
+                            weight: res.diseasesINF[i].count
+                        });
+                    }; 
                     $scope.neighbors = res.neighbors;
                     ids = [];
                     for (var i = 0; i < res.neighbors.length; i++) {
@@ -69,7 +76,7 @@ angular.module('TarPredApp')
                         ,rowEnd = '\r\n'
                         ,results = res.results;
 
-                    var tsv = '"Target Name (BindingDB)"\t"Target Name (DrugBank)"\t"Gene ID"\t"3NN score"\t"Related Diseases"\t"Similar Structures"' + rowEnd;
+                    var tsv = '"Target Name (BindingDB)"\t"Target Name (DrugBank)"\t"Gene ID"\t"3NN score"\t"Related Diseases (Direct)"\t"Related Diseases (Inference)"\t"Similar Structures"' + rowEnd;
                     for (var i = 0; i < results.length; i++) {
                         tsv += '"';
                         tsv += results[i].bindingDB.join('|');
@@ -80,9 +87,16 @@ angular.module('TarPredApp')
                         tsv += '"\t';
                         tsv += results[i].score.toString();
                         tsv += '\t"';
-                        for (var j = 0; j < results[i].diseases.length; j++) {
-                            tsv += results[i].diseases[j].name + ':' + results[i].diseases[j].count.toString();
-                            if (j != results[i].diseases.length - 1){
+                        for (var j = 0; j < results[i].diseasesDE.length; j++) {
+                            tsv += results[i].diseasesDE[j].name + ':' + results[i].diseasesDE[j].count.toString();
+                            if (j != results[i].diseasesDE.length - 1){
+                                tsv += '|';
+                            }
+                        }
+                        tsv += '"\t"';
+                        for (var j = 0; j < results[i].diseasesINF.length; j++) {
+                            tsv += results[i].diseasesINF[j].name + ':' + results[i].diseasesINF[j].count.toString();
+                            if (j != results[i].diseasesINF.length - 1){
                                 tsv += '|';
                             }
                         }
