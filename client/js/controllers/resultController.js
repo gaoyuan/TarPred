@@ -39,20 +39,20 @@ angular.module('TarPredApp')
                     $scope.drugbank = res.drugbank;
                     $scope.GeneIDs = res.GeneIDs;
                     $scope.score = res.score;
-                    $scope.diseasesDE = [];
+                    $scope.diseasesDE = '';
                     for (var i = 0; i < res.diseasesDE.length; i++) {
-                        $scope.diseasesDE.push({
-                            text: res.diseasesDE[i].name,
-                            weight: res.diseasesDE[i].count
-                        });
+                        $scope.diseasesDE += res.diseasesDE[i].name + '(' + res.diseasesDE[i].count.toString() + ')';
+                        if (i != res.diseasesDE.length - 1){
+                            $scope.diseasesDE += ', ';
+                        }
                     };
-                    $scope.diseasesINF = [];
+                    $scope.words = [];
                     for (var i = 0; i < res.diseasesINF.length; i++) {
-                        $scope.diseasesINF.push({
+                        $scope.words.push({
                             text: res.diseasesINF[i].name,
                             weight: res.diseasesINF[i].count
                         });
-                    }; 
+                    };
                     $scope.neighbors = res.neighbors;
                     ids = [];
                     for (var i = 0; i < res.neighbors.length; i++) {

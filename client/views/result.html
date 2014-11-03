@@ -29,11 +29,12 @@
             <h4>Gene IDs</h4>
                 <p ng-hide="GeneIDs.length">No Gene ID information on file.</p>            
                 <p ng-show="GeneIDs.length">{{GeneIDs.split('|').join(', ')}}</p>
-            <h4>Related Diseases <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Associated diseases are collected from Comparative Toxicogenomics Database. DIRECT EVIDENCE (left): A disease is selected if a gene of the target is reported to be a biomarker of the disease or is in the etiology of the disease. Size of the disease in the text cloud represents its number of occurrences in the reported literatures. INFERENCE (right): Diseases inferenced via CTD-curated chemical–gene interactions. Size represents confidence."></i></h4>
-                <div class="row">
-                    <jqcloud words="{{diseasesDE}}"></jqcloud>
-                    <jqcloud words="{{diseasesINF}}" colorclass="1"></jqcloud>
-                </div>
+            <h4>Reported Diseases <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Diseases associated with this target are collected from the Comparative Toxicogenomics Database. A disease with its number of evidences is listed if a gene of the target is reported to be a biomarker of the disease or is in the etiology of the disease."></i></h4>
+                <p ng-hide="diseasesDE.length">There is no reported disease for this target.</p>
+                <p ng-show="diseasesDE.length">{{diseasesDE}}</p>
+            <h4>Inferenced Diseases <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Diseases inferenced via CTD-curated chemical–gene interactions. Size of disease in the text cloud represents confidence."></i></h4>
+                <p ng-hide="words.length">Inferenced diseases information is not available for this target.</p>
+                <jqcloud ng-if="words.length" words="words" width="800" height="350" delay="10"></jqcloud>
             <h4>Similar Structures <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="These are the three nearest neighbors (3NN) of the query compound in the ligand set."></i></h4>
                 <div><span ng-repeat="neighbor in neighbors" id="_{{neighbor._id}}"></span></div>
         </div>
