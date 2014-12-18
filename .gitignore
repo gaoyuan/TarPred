@@ -1,5 +1,7 @@
 mongodb/
 node_modules/
+docs/
+examples/
 *.log
 *.smi
 .DS_Store

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--PLEASE DO NOT MODIFY THIS FILE AND BE AWARE THAT THE FILE CONTAINS CONFIDENTIAL INFORMATION.-->
+<ChemAxon>
+<License>
+<Field Name="Software" Value="Marvin for JavaScript"/>
+<Field Name="License Term" Value="Free Web"/>
+<Field Name="Licensee" Value="University of Washington"/>
+<Field Name="Number of Users" Value="Unlimited"/>
+<Field Name="Expiration Date" Value="2015-12-03"/>
+<Field Name="Support Expiration Date" Value="2015-12-03"/>
+<Field Name="Comment" Value="Recently I’ve developed a tool for molecule target prediction and would like to publish it on the journal Bioinformatics. It is a web server that accepts a query molecule and returns its potential binding targets. On the backend of the server I’m using the JChem command line tool to calculate ECFP.&#13;&#10;Here is a preview of the web server: http://202.127.19.75:5555&#13;&#10;We haven’t make it public yet. It’ll be public after our paper is published."/>
+<Restriction Name="Server Use" Value="Not Allowed"/>
+<Signature Value="MC0CFQCIR8nofGyy3T+Q1kR8oEIo5aKcmwIUFOKnOexPWWbV1GaptQiAwiV1K64="/>
+</License>
+</ChemAxon>
