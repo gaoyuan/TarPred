@@ -23,6 +23,10 @@ angular.module('TarPredApp')
                 });
             });
         };
+
+        $scope.$watch('smiles', function(newValue) {
+            marvinSketcherInstance.importStructure("smiles", newValue);
+        });
         
         $scope.submitJob = function(){
             jobService.create(
