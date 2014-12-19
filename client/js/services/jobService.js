@@ -56,12 +56,7 @@ angular.module('TarPredApp')
                 {'structure': smiles}
             ],
             'display': {
-                'include': ['image'],
-                'parameters': {
-                    'image': {
-                        'width': 100
-                    }
-                }
+                'include': ['image']
             }
         });
     }

@@ -1,9 +1,10 @@
 <div class="container" style="max-width:1000px">
     <div class="middlepart">
         <div class="page-header">
-            <h2>Target Predictions for </span> <img src="{{smiles}}" /> <span title="click to generate download link" ng-show="preDownload" class="glyphicon glyphicon-download-alt clickable" ng-click="generateDownload()"></span><span class="glyphicon glyphicon-refresh rotatinginline" ng-show="inDownload"></span><span ng-show="inDownload">Loading...</span>
-            <a href="#" id="download" ng-show="afterDownload">Download</a></small></h2>
+            <h2>Target Predictions for </span> 
         </div>
+        <img src="{{smiles}}" /> <small><span title="click to generate download link" ng-show="preDownload" class="glyphicon glyphicon-download-alt clickable" ng-click="generateDownload()"></span><span class="glyphicon glyphicon-refresh rotatinginline" ng-show="inDownload"></span><span ng-show="inDownload">Loading...</span>
+            <a href="#" id="download" ng-show="afterDownload">Download</a></small></h2>
         <table class="table table-hover table-condensed">
             <tr>
                 <th class="col-sm-1">Rank</th>
