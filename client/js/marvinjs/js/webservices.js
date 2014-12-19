@@ -1,8 +1,8 @@
 // Define the default location of webservices
 
 function getDefaultServicesPrefix() {
-	var servername = "";
-	var webapp = "/webservices2";
+	var servername = "localhost:5210";
+	var webapp = "/webservices";
 	return servername + webapp;
 }
 
