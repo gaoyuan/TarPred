@@ -10,12 +10,15 @@ angular.module('TarPredApp')
         jobService.preview($routeParams.id).success(function(res){
             $scope.preDownload = true;
             $scope.inDownload = false;
+            $scope.preStructure = true;
+            $scope.inStructure = false;
             $scope.afterDownload = false;
-            $scope.smiles = res.smiles;
             $scope.results = res.results;
             $scope.showDetail = false;
 
             jobService.structure(res.smiles).success(function(res){
+                $scope.preStructure = false;
+                $scope.inStructure = true;
                 $scope.smiles = res.data[0].image.imageUrl;
             })
 
