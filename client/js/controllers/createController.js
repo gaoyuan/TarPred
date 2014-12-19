@@ -4,25 +4,25 @@ angular.module('TarPredApp')
         noty({text: 'Please sign in!', timeout: 1000});
         $location.path('/signin');
     }else{
+        var marvinSketcherInstance;
+        angular.element(document).ready(function () {
+            MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
+                marvinSketcherInstance = sketcherInstance;
+                addSmilesListener();
+            }, function(error) {
+                alert("Loading of the sketcher failed"+error);
+            });
+        });
+
         var addSmilesListener = function(){
-            try{
-                JSApplet.JSME.replaceAllAppletsByJSME(function(jmeInstance){
-                    jmeInstance.setAfterStructureModifiedCallback(function(jsme) {
-                        $scope.$apply(function(){
-                            $scope.smiles = jsme.src.smiles();
-                        });
+            marvinSketcherInstance.on('molchange', function(){
+                marvinSketcherInstance.exportStructure("smiles").then(function(source) {
+                    $scope.$apply(function(){
+                        $scope.smiles = source; 
                     });
                 });
-                document.jme.setAfterStructureModifiedCallback(function(jsme){
-                    $scope.$apply(function(){
-                        $scope.smiles = jsme.src.smiles();
-                    });                    
-                })
-            }catch(e){
-                $timeout(addSmilesListener, 500);
-            }
-        }
-        addSmilesListener();
+            });
+        };
         
         $scope.submitJob = function(){
             jobService.create(

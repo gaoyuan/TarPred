@@ -1,4 +1,4 @@
-<div class="container" style="max-width:420px">
+<div class="container" style="max-width:500px">
   <div class="middlepart">
     <form name="form "class="form-horizontal" role="form" novalidate="novalidate" method="post">
       <div class="form-group">
@@ -7,8 +7,10 @@
           <input class="form-control input-sm" ng-model="smiles" id="smiles" name="smiles" autofocus="autofocus" required="required" /><span ng-show="form.smiles.$dirty &amp;&amp; form.smiles.$error.required" class="help-block">SMILES cannot be empty</span>
         </div>
       </div>
+      <script src="gui/lib/promise-0.1.1.min.js"></script>
+      <script src="js/marvinjslauncher.js"></script>
       <iframe id="sketch" src="js/marvinjs/editor.html" 
-  style="overflow: hidden; min-width: 420px; min-height: 330px; border: 1px solid darkgray;"  />
+  style="overflow: hidden; min-width: 500px; min-height: 400px; border: 1px solid darkgray;"  />
       <div class="form-group">
         <label class="col-sm-6 control-label">Enter the code:</label>
         <div class="col-sm-3">
