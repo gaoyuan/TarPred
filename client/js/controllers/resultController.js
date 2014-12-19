@@ -8,6 +8,7 @@ angular.module('TarPredApp')
         $location.path('/signin');
     }else{
         jobService.preview($routeParams.id).success(function(res){
+            $scope.inSmiles = true;
             $scope.preDownload = true;
             $scope.inDownload = false;
             $scope.afterDownload = false;
@@ -15,6 +16,7 @@ angular.module('TarPredApp')
             $scope.showDetail = false;
 
             jobService.structure(res.smiles).success(function(res){
+                $scope.inSmiles = false;
                 $scope.smiles = res.data[0].image.imageUrl;
             })
 
