@@ -50,5 +50,21 @@ angular.module('TarPredApp')
         });
     };
 
+    jobServiceAPI.structure = function(smiles){
+        return $http.post('http://202.127.19.75:5210/webservices/rest-v0/util/detail', {
+            'structures' : [
+                {'structure': smiles}
+            ],
+            'display': {
+                'include': ['image'],
+                'parameters': {
+                    'image': {
+                        'width': 100
+                    }
+                }
+            }
+        });
+    }
+
     return jobServiceAPI;
 });

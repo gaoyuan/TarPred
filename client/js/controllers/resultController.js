@@ -15,6 +15,10 @@ angular.module('TarPredApp')
             $scope.results = res.results;
             $scope.showDetail = false;
 
+            jobService.structure(res.smiles).success(function(res){
+                $scope.smiles = res.data[0].image.imageUrl;
+            })
+
             angular.element('.glyphicon-question-sign').tooltip();
 
             var renderSvgs = function(ids){
