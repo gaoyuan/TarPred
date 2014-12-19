@@ -9,9 +9,6 @@ angular.module('TarPredApp')
             MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
                 marvinSketcherInstance = sketcherInstance;
                 addSmilesListener();
-                $scope.$watch('smiles', function(newValue) {
-                    marvinSketcherInstance.importStructure("smiles", newValue);
-                });
             }, function(error) {
                 alert("Loading of the sketcher failed"+error);
             });
