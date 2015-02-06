@@ -268,6 +268,7 @@ app.post('/create', function(req, res){
                                                     });
                                                   });
                                                 }
+                                                fusionSim(ecfp_files);
                                               });
                                           }
                                         }
