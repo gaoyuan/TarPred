@@ -264,7 +264,7 @@ app.post('/create', function(req, res){
                                         }else{
                                             fusionSim(file);
                                         }
-                                      }
+                                      });
                                     }
                                   });
                                 };                              
