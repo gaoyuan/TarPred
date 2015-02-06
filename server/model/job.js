@@ -79,9 +79,9 @@ exports.job_results = function job_results(id, callback){
 };
 
 // increment progress
-exports.increment_job_progress = function increment_job_progress(id, callback){
+exports.increment_job_progress = function increment_job_progress(id, num, callback){
   var Job = mongoose.model('Job');
-  Job.findByIdAndUpdate(id, {$inc: {progress: 1}}, {select: {progress:1}}, function(err, result){
+  Job.findByIdAndUpdate(id, {$inc: {progress: num}}, {select: {progress:1}}, function(err, result){
     if (err) {
       callback('error');
     } else {
