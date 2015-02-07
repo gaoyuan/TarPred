@@ -130,10 +130,10 @@ angular.module('TarPredApp')
         jobService.progress($routeParams.id).success(function(res){
             $scope.job_progress = res.progress;
             if (res.progress == 533){
-                $timeout.cancel(getlistRefresher);
+                $timeout.cancel(getProgressRefresher);
                 $route.reload();
             }
-            getlistRefresher = $timeout(showProgress, 2000);
+            getProgressRefresher = $timeout(showProgress, 2000);
         });
     }
 
@@ -159,7 +159,7 @@ angular.module('TarPredApp')
     });
 
     $scope.$on('$locationChangeStart', function(e){
-        $timeout.cancel(getlistRefresher);
+        $timeout.cancel(getProgressRefresher);
     });
 
     $scope.download = function(id){
