@@ -1,9 +1,12 @@
 angular.module('TarPredApp')
 .controller('viewController', function($scope, $location, $timeout, $cookies, jobService){
     if (!$cookies.user){
-        noty({text: 'Please sign in!', timeout: 1000});
-        $location.path('/signin');
+        $scope.registered = false;
+        var submitJob = function(){
+            $location.path('/view/' + $scope.code);
+        }
     }else{
+        $scope.registered = true;
         var getlistRefresher;
         var getList = function(){
             jobService.list(

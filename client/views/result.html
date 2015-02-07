@@ -7,14 +7,10 @@
                 <span>{{job_progress/533.0*100 | number:0}}%</span>
                 </div>
             </div>
-            <div>The retrieve code for this job is <b>{{code}}</b>.You can track the progress or view the result of this prediction later by clicking on 'View' at the navbar and entering the retrieve code.</div>
+            <div>The retrieval code for this job is <b>{{code}}</b>.You can track the progress or view the result of this prediction later by clicking on 'View' at the navigation and entering the retrieval code.</div>
         </div>
         <div ng-show="error">
-            Some error occurr<div class="progress">
-                          <div class="progress-bar active" role="progressbar" aria-valuenow="{{job.progress}}" aria-valuemin="0" aria-valuemax="533" ng-style="{width : ( job.progress/533.0*100 + '%' ) }">
-                            <span>{{job.progress/533.0*100 | number:0}}%</span>
-                          </div>
-                        </div>ed. Please check the SMILES is valid. If you have any questions, please contact the author at myzheng@simm.ac.cn.
+            Some error occurred. Please check the SMILES is valid. If you have any questions, please contact the author at myzheng@simm.ac.cn.
         </div>
         <div ng-show="finished">
             <div class="row">

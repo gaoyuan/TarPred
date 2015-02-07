@@ -130,6 +130,7 @@ angular.module('TarPredApp')
         jobService.progress($routeParams.id).success(function(res){
             $scope.job_progress = res.progress;
             if (res.progress == 533){
+                $timeout.cancel(getlistRefresher);
                 $route.reload();
             }
             getlistRefresher = $timeout(showProgress, 2000);
@@ -143,7 +144,10 @@ angular.module('TarPredApp')
     $scope.code = $routeParams.id;
 
     jobService.status($routeParams.id).success(function(res){
-        if (res.status == 2){
+        if (res.status === undefined){
+            noty({text: 'Wrong retrieval code!', type:'error', timeout: 1000});
+            $location.path('/view');
+        }else if (res.status == 2){
             $scope.finished = true;
             showResult();
         }else if (res.status == 1){
