@@ -2,7 +2,7 @@ angular.module('TarPredApp')
 .controller('viewController', function($scope, $location, $timeout, $cookies, jobService){
     if (!$cookies.user){
         $scope.registered = false;
-        var submitJob = function(){
+        $scope.submitCode = function(){
             $location.path('/view/' + $scope.code);
         }
     }else{
