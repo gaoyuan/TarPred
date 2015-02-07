@@ -37,7 +37,7 @@ exports.get_job_progress = function get_job_progress(id, callback){
     if (err) {
       callback('error');
     } else {
-      callback('success', result);
+      callback('success', result.progress);
     }
   });
 };
@@ -49,7 +49,7 @@ exports.get_job_status = function get_job_status(id, callback){
     if (err) {
       callback('error');
     } else {
-      callback('success', result);
+      callback('success', result.status);
     }
   });
 };
