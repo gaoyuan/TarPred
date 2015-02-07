@@ -2,7 +2,7 @@ angular.module('TarPredApp')
 .run(function($anchorScroll) {
     $anchorScroll.yOffset = 100;
 })
-.controller('resultController', function($scope, $route, $routeParams, $cookies, $location, $anchorScroll, $timeout, jobService){
+.controller('resultController', function($scope, $window, $routeParams, $cookies, $location, $anchorScroll, $timeout, jobService){
 
     var showResult = function(){
         jobService.preview($routeParams.id).success(function(res){
@@ -131,7 +131,7 @@ angular.module('TarPredApp')
             $scope.job_progress = res.progress;
             if (res.progress == 533){
                 $timeout.cancel(getProgressRefresher);
-                $route.reload();
+                $window.location.reload();
             }
             getProgressRefresher = $timeout(showProgress, 2000);
         });
