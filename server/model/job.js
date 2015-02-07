@@ -33,11 +33,23 @@ exports.update_job_status = function update_job_status(id, status, callback){
 // get progress
 exports.get_job_progress = function get_job_progress(id, callback){
   var Job = mongoose.model('Job');
-  Job.findById(id, function(err, result){
+  Job.findById(id, 'progress', function(err, result){
     if (err) {
       callback('error');
     } else {
-      callback('success', result.progress);
+      callback('success', result);
+    }
+  });
+};
+
+// get status
+exports.get_job_status = function get_job_status(id, callback){
+  var Job = mongoose.model('Job');
+  Job.findById(id, 'status', function(err, result){
+    if (err) {
+      callback('error');
+    } else {
+      callback('success', result);
     }
   });
 };
