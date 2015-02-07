@@ -3,11 +3,13 @@
         <div ng-show="!registered">
             <form name="form "class="form-horizontal" role="form" novalidate="novalidate" method="post">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Retrieval Code:</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-4 control-label">Retrieval Code:</label>
+                    <div class="col-sm-4">
                       <input class="form-control input-sm" ng-model="code" id="code" name="code" autofocus="autofocus" required="required" /><span ng-show="form.code.$dirty &amp;&amp; form.code.$error.required" class="help-block">Code cannot be empty</span>
                     </div>
-                    <button ng-click="submitCode()" class="btn btn-primary" ng-disabled="form.$invalid">Submit</button>
+                    <div class="col-sm-4">
+                        <button ng-click="submitCode()" class="btn btn-primary" ng-disabled="form.$invalid">Submit</button>
+                    </div>
                 </div>
             </form>
         </div>
