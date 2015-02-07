@@ -3,10 +3,8 @@ angular.module('TarPredApp')
     $anchorScroll.yOffset = 100;
 })
 .controller('resultController', function($scope, $routeParams, $cookies, $location, $anchorScroll, $timeout, jobService){
-    if (!$cookies.user){
-        noty({text: 'Please sign in!', timeout: 1000});
-        $location.path('/signin');
-    }else{
+
+    var showResult = function(){
         jobService.preview($routeParams.id).success(function(res){
             $scope.inSmiles = true;
             $scope.preDownload = true;
@@ -125,5 +123,45 @@ angular.module('TarPredApp')
                 });
             };
         });
+    };
+
+    var getProgressRefresher;
+    var showProgress = function(){
+        jobService.progress($routeParams.id).success(function(res){
+            $scope.job_progress = res.progress;
+            if (res.progress == 533){
+                $location.path('/view/' + $routeParams.id);
+            }
+            getlistRefresher = $timeout(showProgress, 2000);
+        });
     }
+
+
+    var finished = false;
+    var error = false;
+    var progress = false;
+
+    jobService.status($routeParams.id).success(function(res){
+        if (res.status == 2){
+            finished = true;
+            showResult();
+        }else if (res.status == 1){
+            error = true;
+        }else{
+            progress = true;
+            showProgress();
+        }
+    });
+
+    $scope.$on('$locationChangeStart', function(e){
+        $timeout.cancel(getlistRefresher);
+    });
+
+    $scope.download = function(id){
+        jobService.download(id).success(function(){
+        }).error(function(){
+            noty({text: 'Download error!', type:'error', timeout: 1000});
+        });
+    };
+
 });

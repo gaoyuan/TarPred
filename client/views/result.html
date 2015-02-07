@@ -1,44 +1,60 @@
 <div class="container" style="max-width:1000px">
     <div class="middlepart">
-        <div class="row">
-            <div class="col-md-8"><div style="font-size: 25px">Target Predictions for</div></div>
-            <div class="col-md-4"><button type="button" class="btn btn-default" ng-show="preDownload" ng-click="generateDownload()">Save Result as tsv File</button><span class="glyphicon glyphicon-refresh rotatinginline" ng-show="inDownload"></span><span ng-show="inDownload">Loading...</span><a href="#" id="download" class="btn btn-default" ng-show="afterDownload">Download</a></div>
+        <div ng-show="progress">
+            <div class="progress">
+                <div class="progress-bar active" role="progressbar" aria-valuenow="{{job_progress}}" aria-valuemin="0" aria-valuemax="533" ng-style="{width : ( job_progress/533.0*100 + '%' ) }">
+                <span>{{job_progress/533.0*100 | number:0}}%</span>
+                </div>
+            </div>
         </div>
-        <div ng-show="inSmiles"><span class="glyphicon glyphicon-refresh rotatinginline"></div>
-        <div><img src="{{smiles}}" /></div>
-        <table class="table table-hover table-condensed">
-            <tr>
-                <th class="col-sm-1">Rank</th>
-                <th class="col-sm-9">Target</th>
-                <th class="col-sm-2">3NN score</th>
-            </tr>
-            <tr ng-repeat="result in results" class="clickable" ng-click="detail($index)">
-                <td>{{$index + 1}}</td>
-                <td>{{result.bindingDB[0]}}</td>
-                <td>{{result.score | number: 3}}</td>
-            </tr>
-        </table>
-        <div id="showDetail" ng-show="showDetail">
-            <div class="skillbar clearfix">
-                <div class="skillbar-title"><span>Rank. {{ranking}}</span></div>
-                <div class="skillbar-bar" style="width:{{score*100}}%;"></div>
-                <div class="skill-bar-percent">{{score | number: 3}}</div>
-            </div> <!-- End Skill Bar -->
-            <h4>Binding DB Name</h4>
-                <p>{{bindingDB.join(', ')}}</p>
-            <h4>DrugBank Name</h4>
-                <p>{{drugbank.join(', ')}}</p>
-            <h4>Gene IDs</h4>
-                <p ng-hide="GeneIDs.length">No Gene ID information on file.</p>            
-                <p ng-show="GeneIDs.length">{{GeneIDs.split('|').join(', ')}}</p>
-            <h4>Reported Diseases <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Diseases associated with this target are collected from the Comparative Toxicogenomics Database. A disease with its number of evidences is listed if a gene of the target is reported to be a biomarker of the disease or is in the etiology of the disease."></i></h4>
-                <p ng-hide="diseasesDE.length">There is no reported disease for this target.</p>
-                <p ng-show="diseasesDE.length">{{diseasesDE}}</p>
-            <h4>Inferenced Diseases <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Diseases inferenced via CTD-curated chemical–gene interactions. Size of disease in the text cloud represents confidence."></i></h4>
-                <p ng-hide="words.length">Inferenced diseases information is not available for this target.</p>
-                <jqcloud ng-if="words.length" words="words" width="800" height="350" delay="10"></jqcloud>
-            <h4>Similar Structures <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="These are the three nearest neighbors (3NN) of the query compound in the ligand set."></i></h4>
-                <div><span ng-repeat="neighbor in neighbors" id="_{{neighbor._id}}"></span></div>
+        <div ng-show="error">
+            Some error occurr<div class="progress">
+                          <div class="progress-bar active" role="progressbar" aria-valuenow="{{job.progress}}" aria-valuemin="0" aria-valuemax="533" ng-style="{width : ( job.progress/533.0*100 + '%' ) }">
+                            <span>{{job.progress/533.0*100 | number:0}}%</span>
+                          </div>
+                        </div>ed. Please check the SMILES is valid. If you have any questions, please contact the author at myzheng@simm.ac.cn.
+        </div>
+        <div ng-show="finished">
+            <div class="row">
+                <div class="col-md-8"><div style="font-size: 25px">Target Predictions for</div></div>
+                <div class="col-md-4"><button type="button" class="btn btn-default" ng-show="preDownload" ng-click="generateDownload()">Save Result as tsv File</button><span class="glyphicon glyphicon-refresh rotatinginline" ng-show="inDownload"></span><span ng-show="inDownload">Loading...</span><a href="#" id="download" class="btn btn-default" ng-show="afterDownload">Download</a></div>
+            </div>
+            <div ng-show="inSmiles"><span class="glyphicon glyphicon-refresh rotatinginline"></div>
+            <div><img src="{{smiles}}" /></div>
+            <table class="table table-hover table-condensed">
+                <tr>
+                    <th class="col-sm-1">Rank</th>
+                    <th class="col-sm-9">Target</th>
+                    <th class="col-sm-2">3NN score</th>
+                </tr>
+                <tr ng-repeat="result in results" class="clickable" ng-click="detail($index)">
+                    <td>{{$index + 1}}</td>
+                    <td>{{result.bindingDB[0]}}</td>
+                    <td>{{result.score | number: 3}}</td>
+                </tr>
+            </table>
+            <div id="showDetail" ng-show="showDetail">
+                <div class="skillbar clearfix">
+                    <div class="skillbar-title"><span>Rank. {{ranking}}</span></div>
+                    <div class="skillbar-bar" style="width:{{score*100}}%;"></div>
+                    <div class="skill-bar-percent">{{score | number: 3}}</div>
+                </div> <!-- End Skill Bar -->
+                <h4>Binding DB Name</h4>
+                    <p>{{bindingDB.join(', ')}}</p>
+                <h4>DrugBank Name</h4>
+                    <p>{{drugbank.join(', ')}}</p>
+                <h4>Gene IDs</h4>
+                    <p ng-hide="GeneIDs.length">No Gene ID information on file.</p>            
+                    <p ng-show="GeneIDs.length">{{GeneIDs.split('|').join(', ')}}</p>
+                <h4>Reported Diseases <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Diseases associated with this target are collected from the Comparative Toxicogenomics Database. A disease with its number of evidences is listed if a gene of the target is reported to be a biomarker of the disease or is in the etiology of the disease."></i></h4>
+                    <p ng-hide="diseasesDE.length">There is no reported disease for this target.</p>
+                    <p ng-show="diseasesDE.length">{{diseasesDE}}</p>
+                <h4>Inferenced Diseases <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Diseases inferenced via CTD-curated chemical–gene interactions. Size of disease in the text cloud represents confidence."></i></h4>
+                    <p ng-hide="words.length">Inferenced diseases information is not available for this target.</p>
+                    <jqcloud ng-if="words.length" words="words" width="800" height="350" delay="10"></jqcloud>
+                <h4>Similar Structures <i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="These are the three nearest neighbors (3NN) of the query compound in the ligand set."></i></h4>
+                    <div><span ng-repeat="neighbor in neighbors" id="_{{neighbor._id}}"></span></div>
+            </div>
         </div>
     </div>
 </div>

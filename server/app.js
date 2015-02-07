@@ -519,6 +519,21 @@ app.post('/progress', function(req, res){
   });
   return;
 });
+app.post('/status', function(req, res){
+  var id = req.body.id;
+  jobfunc.get_job_status(id, function(status, status){
+    if (status == 'error'){
+      res.status(500).json({
+        error: 'Database error! Please try again later.'
+      });
+    }else{
+      res.status(200).json({
+        status: status
+      });
+    }
+  });
+  return;
+});
 app.post('/svg', function(req, res){
   var id = req.body.id;
   structurefunc.svg(id, function(status, result){

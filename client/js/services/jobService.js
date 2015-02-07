@@ -52,6 +52,12 @@ angular.module('TarPredApp')
         });
     };
 
+    jobServiceAPI.status = function(id){
+        return $http.post('/status', {
+            id: id
+        });
+    };
+
     jobServiceAPI.svg = function(id){
         return $http.post('/svg', {
             id: id
