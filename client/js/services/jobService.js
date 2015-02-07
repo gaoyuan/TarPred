@@ -12,6 +12,14 @@ angular.module('TarPredApp')
         });
     };
 
+    jobServiceAPI.createUnregistered = function(smiles, captcha_id, captcha_code){
+        return $http.post('/createUnregistered', {
+            smiles: smiles,
+            captcha_id: captcha_id,
+            captcha_code: captcha_code
+        });
+    };
+
     jobServiceAPI.list = function(username, password){
         return $http.post('/list', {
             username: username,

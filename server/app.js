@@ -183,6 +183,111 @@ app.post('/signin', function(req, res){
   });
   return;
 });
+
+app.post('/createUnregistered', function(req, res){
+  var smiles = req.body.smiles;
+  var captcha_id = req.body.captcha_id;
+  var captcha_code = req.body.captcha_code;
+  captchafunc.get_code_and_remove(captcha_id, function(status, code){
+    if (status == 'error'){
+      res.status(500).json({
+        error: 'Database error! Please try again later.'
+      });
+    }else{
+      if (parseInt(code) === parseInt(captcha_code)){
+        jobfunc.create_job('guest', smiles, function(status, job){
+          if (status == 'error'){
+            res.status(500).json({
+              error: 'Database error! Please try again later.'
+            });                
+          }else{
+            res.status(200).json({id: job._id}).end();
+            var infile = job._id.toString() + '.smi';
+            var tmpdir = path.join(__dirname, job._id.toString());
+            fs.writeFile(infile, smiles, function(err){
+              if (err) {
+                console.log(err);
+              }else{
+                // make a temporary directory
+                fs.mkdir(tmpdir, function(err){
+                  // now perform the calculation
+                  fs.readdir(path.join(__dirname, '/Refbase/ecfp'), function(err, files){
+                    if (err) {
+                      console.log(err);
+                    }else{
+                      var fusionSim = function(file){
+                        var fname = path.join(__dirname, '/Refbase/ecfp/' + file);
+                        var output = path.join(tmpdir, file.split('.')[0] + '.tani');
+                        exec('screenmd '+infile+' -k '+fname+' -g -M Tanimoto -o '+ output, function(error){
+                          if (error == null){
+                            // exitted successfully
+                            jobfunc.increment_job_progress(job._id, 1, function(status, progress){
+                              if (progress == 533){
+                                // summarize result
+                                exec('python summary.py -query ' + infile).on('close', function(code){
+                                  if (code == 0){
+                                    // exit successfully
+                                    exit_status = 2;
+                                  }else{
+                                    // exit with error
+                                    exit_status = 1;
+                                  }
+                                  jobfunc.update_job_status(job._id, exit_status, function(status){
+                                    if (status == 'error'){
+                                      res.status(500).json({error: 'Database error! Please try again later.'});
+                                    }else{
+                                      res.status(200).end();
+                                    }
+                                  });
+                                });
+                              }
+                              file = files.shift();
+                              if (file === undefined){
+                                  return;
+                              }else{
+                                  fusionSim(file);
+                              }
+                            });
+                          }
+                        });
+                      };                              
+                      
+                      for (var i = 0; i < 4; i ++){
+                        file = files.shift();
+                        fusionSim(file);
+                      }
+                      
+                    }
+                  }); // end fs.readdir
+                }); // end fs.mkdir
+              }
+            }); // end fs.writeFile
+          }
+        }); // end jobfunc.create_job
+      }else{
+        // incorrect validation code
+        var code = parseInt(Math.random()*9000+1000);
+        captchafunc.create_captcha(code, function(status, id){
+          if (status == 'error'){
+            res.status(500).json({
+              error: 'Database error! Please try again later.'
+            });                
+          }else{
+            var p = new captchapng(80, 30, code);
+            p.color(0, 0, 0, 0);
+            p.color(80, 80, 80, 255);
+            res.status(401).json({
+              id: id,
+              captcha: p.getBase64(),
+              error: 'Incorrect validation code'
+            });
+          }
+        });    
+      }  
+    }
+  }); // end captchafunc.get_code_and_remove
+});
+
 app.post('/create', function(req, res){
   var username = req.body.username;
   var password = req.body.password;
