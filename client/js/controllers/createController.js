@@ -47,7 +47,8 @@ angular.module('TarPredApp')
             $scope.captcha_id,
             $scope.code
         ).success(function(res){
-            console.log(res);
+            noty({text: 'Job created successfully!', type:'success', timeout: 1000});
+            $location.path('/view/' + res.id);
         }).error(function(res){
             noty({text: res.error, type:'error', timeout: 1000});
             if (res.error == 'Incorrect validation code'){

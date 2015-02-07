@@ -1,11 +1,13 @@
 <div class="container" style="max-width:1000px">
     <div class="middlepart">
         <div ng-show="progress">
+            <div>Calculating ...</div>
             <div class="progress">
                 <div class="progress-bar active" role="progressbar" aria-valuenow="{{job_progress}}" aria-valuemin="0" aria-valuemax="533" ng-style="{width : ( job_progress/533.0*100 + '%' ) }">
                 <span>{{job_progress/533.0*100 | number:0}}%</span>
                 </div>
             </div>
+            <div>The retrieve code for this job is <b>{{code}}</b>.You can track the progress or view the result of this prediction later by clicking on 'View' at the navbar and entering the retrieve code.</div>
         </div>
         <div ng-show="error">
             Some error occurr<div class="progress">
