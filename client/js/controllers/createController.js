@@ -68,6 +68,12 @@ angular.module('TarPredApp')
         }
     };
 
+    if (!$cookies.user){
+        $scope.unregistered = true;
+    }else{
+        $scope.unregistered = false;
+    }
+
     captchaService.create().success(function(res){
         $scope.captcha_id = res.id;
         $scope.image = 'data:image/png;base64,' + res.captcha;
